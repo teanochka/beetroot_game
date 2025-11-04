@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dgd8it2c4ibxy"]
 
 [ext_resource type="Texture2D" uid="uid://w3salmff3pqv" path="res://assets/beetroot.png" id="1_4gq7n"]
-[ext_resource type="Script" uid="uid://dffqn428qkw5t" path="res://scenes/Item.gd" id="1_s8enn"]
+[ext_resource type="Script" uid="uid://dffqn428qkw5t" path="res://scripts/Item.gd" id="1_s8enn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r3ghi"]
 radius = 4.0

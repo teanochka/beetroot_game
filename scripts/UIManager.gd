@@ -12,14 +12,21 @@ var building_data = [
 		"name": "Конвейер",
 		"price": 1,
 		"description": "Основа производства",
-		"texture": "res://assets/block.png"
+		"texture": "res://assets/conveyor.png"
 	},
 	{
 		"key": "cleaner", 
 		"name": "Очистительная станция",
 		"price": 50,
 		"description": "Очищает свеклу от примесей",
-		"texture": "res://assets/block.png"
+		"texture": "res://assets/cleaner.png"
+	},
+	{
+		"key": "diffuser", 
+		"name": "Диффузор",
+		"price": 100,
+		"description": "Извлекает сахарный сироп",
+		"texture": "res://assets/diffuser.png"
 	},
 	{
 		"key": "evaporator",

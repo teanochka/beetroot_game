@@ -1,10 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://capshjnhlhcvd"]
+[gd_scene load_steps=7 format=3 uid="uid://capshjnhlhcvd"]
 
 [ext_resource type="Texture2D" uid="uid://cc1u2gyx0d17m" path="res://assets/block.png" id="1_n8bkc"]
 [ext_resource type="Script" uid="uid://2wy5a32ynpw3" path="res://scripts/Building.gd" id="1_uvy8r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvy8r"]
 size = Vector2(16, 15)
+
+[sub_resource type="Animation" id="Animation_ejq8p"]
+resource_name = "working"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.20180023, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_rla3o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lm2ef"]
+_data = {
+&"RESET": SubResource("Animation_rla3o"),
+&"working": SubResource("Animation_ejq8p")
+}
 
 [node name="Building" type="StaticBody2D"]
 script = ExtResource("1_uvy8r")
@@ -16,3 +54,8 @@ texture = ExtResource("1_n8bkc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_uvy8r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lm2ef")
+}
