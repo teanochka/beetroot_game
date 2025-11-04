@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cm6n5ymc804py"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+
+[node name="World" type="Node2D" parent="."]
