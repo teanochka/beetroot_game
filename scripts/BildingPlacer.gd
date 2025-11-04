@@ -8,6 +8,7 @@ var is_placing: bool = false
 var occupied_cells:={}
 
 func _ready():
+	add_to_group("BuildingPlacer")
 	ghost_building.visible = false
 	
 	var game_manager = get_tree().get_first_node_in_group("GameManager")
@@ -75,6 +76,7 @@ func try_place_building():
 	create_building(selected_building_key, world_pos, selected_building_texture)
 	# сохраняем тип постройки в клетку
 	occupied_cells[cell] = selected_building_key
+	set_meta("occupied_cells", occupied_cells)
 	finish_placement()
 
 func create_building(building_key: String, position: Vector2, texture: Texture2D):
@@ -98,3 +100,8 @@ func finish_placement():
 	selected_building_key = ""
 	selected_building_texture = null
 	ghost_building.visible = false
+
+func get_building_type_at_cell(cell: Vector2i) -> String:
+	if occupied_cells.has(cell):
+		return occupied_cells[cell]
+	return ""

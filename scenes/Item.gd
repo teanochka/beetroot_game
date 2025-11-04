@@ -1,34 +1,45 @@
 extends Area2D
 
-@export var speed := 40.0
-@onready var sprite := $Sprite2D
+signal cell_changed(cell: Vector2i)
+@export var conveyor_speed: float = 100.0
 var current_cell: Vector2i
-var map: TileMap  # ссылка на твой TileMap
+var is_falling: bool = true
+@onready var tilemap := get_tree().get_first_node_in_group("BuildingPlacer")
 
-func _physics_process(delta):
-	if map == null:
-		return
-	
-	# Получаем клетку под предметом
-	var cell = map.local_to_map(map.to_local(global_position))
-	current_cell = cell
-	
-	# Проверяем, есть ли постройка под предметом
-	if map.has_meta("occupied_cells"):  # если хранишь словарь на TileMap
-		var data = map.get_meta("occupied_cells")
-		if data.has(cell):
-			var btype = data[cell]
-			match btype:
-				"conveyor":
-					move_on_conveyor(delta)
-				"washer":
-					process_in_washer()
-				_:  # другие типы
-					pass
+func _process(_delta):
+	if tilemap:
+		# смещаем проверку на полклетки вниз
+		var cell_below_pos = global_position + Vector2(0, tilemap.tile_set.tile_size.y / 2)
+		var new_cell = tilemap.local_to_map(tilemap.to_local(cell_below_pos))
+		
+		if new_cell != current_cell:
+			current_cell = new_cell
+			emit_signal("cell_changed", current_cell)
 
-func move_on_conveyor(delta):
-	global_position += Vector2.RIGHT * speed * delta
+			
+		if not is_falling:
+			var building_type = check_building_below()
+			if building_type == "conveyor":
+				global_position.x += conveyor_speed * _delta
+			elif building_type == "":
+				print("Под предметом ничего нет — удаляем его.")
+				queue_free()
 
-func process_in_washer():
-	# здесь можно сделать логику "исчез на 10 секунд, потом вернуть"
-	queue_free()
+
+func check_building_below() -> String:
+	if not tilemap:
+		return ""
+	var building_type = tilemap.get_building_type_at_cell(current_cell)
+	if building_type != "":
+		print("Под предметом находится постройка типа:", building_type)
+	else:
+		print("Под предметом ничего нет")
+	return building_type
+
+func on_fall_finished():
+	is_falling = false
+	print("Предмет приземлился, начинаем проверку под ним...")
+	var building_type = tilemap.get_building_type_at_cell(current_cell)
+	if building_type == "":
+		print("Под предметом ничего нет — удаляем.")
+		queue_free()
