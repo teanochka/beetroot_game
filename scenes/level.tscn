@@ -62,6 +62,8 @@ script = ExtResource("8_b121j")
 
 [node name="Item" parent="ItemSpawner" instance=ExtResource("5_klq6b")]
 visible = false
+y_sort_enabled = true
 
 [node name="Items" type="Node2D" parent="ItemSpawner"]
+y_sort_enabled = true
 position = Vector2(-7, 9)

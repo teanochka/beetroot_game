@@ -12,7 +12,7 @@ var building_data = [
 		"name": "Конвейер",
 		"price": 1,
 		"description": "Основа производства",
-		"texture": "res://assets/conveyor.png"
+		"texture": "res://assets/conveyorR.png"
 	},
 	{
 		"key": "cleaner", 
