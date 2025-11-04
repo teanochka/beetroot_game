@@ -33,21 +33,21 @@ var building_data = [
 		"name": "Выпаривающий аппарат", 
 		"price": 200,
 		"description": "Выпаривает воду из сиропа",
-		"texture": "res://assets/block.png"
+		"texture": "res://assets/evaporator.png"
 	},
 	{
 		"key": "crystallizer",
 		"name": "Кристаллизатор",
 		"price": 1000,
 		"description": "Создает сахарные кристаллы", 
-		"texture": "res://assets/block.png"
+		"texture": "res://assets/crystallizer.png"
 	},
 	{
 		"key": "packer",
 		"name": "Упаковщик",
 		"price": 2000,
 		"description": "Фасует готовый сахар",
-		"texture": "res://assets/block.png"
+		"texture": "res://assets/packer.png"
 	}
 ]
 
