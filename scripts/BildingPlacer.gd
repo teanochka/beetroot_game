@@ -6,9 +6,10 @@ var selected_building_key: String = ""
 var selected_building_texture: Texture2D
 var is_placing: bool = false
 var occupied_cells:={}
-
+var busy_stations: Dictionary = {}
 # Текущее направление конвейера (по умолчанию - вправо)
 var current_conveyor_direction: int = 0
+const MAX_BUILDING_HEIGHT: int = -4
 
 var conveyor_directions = [
 	{
@@ -222,3 +223,14 @@ func spawn_initial_buildings():
 
 	
 	set_meta("occupied_cells", occupied_cells)
+	
+
+func is_station_busy(cell: Vector2i) -> bool:
+	var is_busy = busy_stations.get(cell, false)
+	#print("Проверка занятости станции в клетке ", cell, ": ", is_busy)
+	return is_busy
+
+func set_station_busy(cell: Vector2i, busy: bool):
+	busy_stations[cell] = busy
+	print(cell, busy)
+	print("Текущие занятые станции: ", busy_stations)
