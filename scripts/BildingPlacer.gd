@@ -37,6 +37,8 @@ func _ready():
 	add_to_group("BuildingPlacer")
 	ghost_building.visible = false
 	
+	spawn_initial_buildings()
+	
 	var game_manager = get_tree().get_first_node_in_group("GameManager")
 	if game_manager:
 		print("BuildingPlacer: GameManager найден, подключаем building_selected...")
@@ -63,7 +65,7 @@ func _on_building_selected(building_key: String, texture: Texture2D):
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var cell = get_mouse_cell()
-		print("Нажата клетка: ", cell, " (X:", cell.x, ", Y:", cell.y, ")")
+		print("Нажата клетка: ", cell, map_to_local(cell))
 		
 		# Дополнительная информация о клетке
 		if is_cell_occupied(cell):
@@ -173,3 +175,50 @@ func get_building_type_at_cell(cell: Vector2i) -> String:
 	if occupied_cells.has(cell):
 		return occupied_cells[cell]
 	return ""
+	
+func spawn_initial_buildings():
+	print("Спавним стартовые постройки...")
+	
+	# Импортер в клетке (-5, -3)
+	var importer_cell = Vector2i(-5, -3)
+	var importer_pos = map_to_local(importer_cell)
+	var cell_size = tile_set.tile_size
+	var importer_texture = preload("res://assets/importer.png")
+	var sprite_height = importer_texture.get_height() if importer_texture else 0
+	var offset = Vector2(0, (cell_size.y / 2) - (sprite_height / 2))
+	importer_pos += offset
+	
+	create_building("importer", importer_pos, importer_texture)
+	occupied_cells[importer_cell] = "importer"
+	print("Импортер размещен в клетке: ", importer_cell, map_to_local(importer_cell))
+	
+	# Конвейер вниз в клетке (-4, -3)
+	var conveyor_cell = Vector2i(-4, -3)
+	var conveyor_pos = map_to_local(conveyor_cell)
+	var conveyor_data = conveyor_directions[1] # conveyor_down (индекс 1)
+	var conveyor_texture = load(conveyor_data["texture"])
+	sprite_height = conveyor_texture.get_height()
+	offset = Vector2(0, (cell_size.y / 2) - (sprite_height / 2))
+	conveyor_pos += offset
+	
+	create_building(conveyor_data["key"], conveyor_pos, conveyor_texture)
+	occupied_cells[conveyor_cell] = conveyor_data["key"]
+	print("Конвейер (вниз) размещен в клетке: ", conveyor_cell)
+	conveyor_cell = Vector2i(-4, -2)
+	conveyor_pos = map_to_local(conveyor_cell)
+	conveyor_pos += offset
+	create_building(conveyor_data["key"], conveyor_pos, conveyor_texture)
+	occupied_cells[conveyor_cell] = conveyor_data["key"]
+	
+	var exporter_cell = Vector2i(6, -3)
+	var exporter_pos = map_to_local(exporter_cell)
+	var exporter_texture = preload("res://assets/exporter.png")
+	sprite_height = exporter_texture.get_height() if exporter_texture else 0
+	offset = Vector2(0, (cell_size.y / 2) - (sprite_height / 2))
+	exporter_pos += offset
+	create_building("exporter", exporter_pos, exporter_texture)
+	occupied_cells[exporter_cell] = "exporter"
+
+
+	
+	set_meta("occupied_cells", occupied_cells)

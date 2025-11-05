@@ -25,3 +25,7 @@ func purchase(price: int) -> bool:
 		return true
 	print("GameManager: Недостаточно денег!")
 	return false
+	
+func add_money(amount: int):
+	player_money += amount
+	money_changed.emit(player_money)

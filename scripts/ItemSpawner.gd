@@ -17,8 +17,7 @@ func spawn_item():
 	print("ItemSpawner: создаём предмет...")
 	var item = item_scene.instantiate()
 
-	var start_y_offset = -200
-	item.global_position = global_position + Vector2(0, start_y_offset)
+	item.global_position = Vector2(0, -10)
 
 	# добавляем предмет в контейнер или родителя
 	if items_container:

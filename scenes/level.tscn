@@ -58,6 +58,7 @@ script = ExtResource("6_2r41h")
 [node name="Buildings" type="Node2D" parent="."]
 
 [node name="ItemSpawner" type="Node2D" parent="."]
+position = Vector2(-56, -40)
 script = ExtResource("8_b121j")
 
 [node name="Item" parent="ItemSpawner" instance=ExtResource("5_klq6b")]
