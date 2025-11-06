@@ -64,7 +64,7 @@ func _ready():
 	money_label =$MoneyLabel
 	building_menu = $BuildingMenu
 	buildings_list = $BuildingMenu/MarginContainer/ScrollContainer/BuildingsList
-	
+	deconstruction_label.hide()
 	if building_menu:
 		building_menu.visible = false
 	
@@ -188,6 +188,8 @@ func update_money_display(new_money: int):
 
 func _input(event):
 	if event.is_action_pressed("build_menu") and building_menu:
+		var tutorial = get_tree().get_first_node_in_group("Tutorial")
+		tutorial.complete_task_by_type("open_menu")
 		building_menu.visible = !building_menu.visible
 		print("Меню видимо: ", building_menu.visible)
 	if event.is_action_pressed("hide_menu"):

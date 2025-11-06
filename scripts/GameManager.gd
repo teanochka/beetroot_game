@@ -4,8 +4,10 @@ signal money_changed(new_money)
 signal building_selected(building_key, building_texture)
 
 var player_money: int = 1000
+var tutorial
 
 func _ready():
+	tutorial = get_tree().get_first_node_in_group("Tutorial")
 	add_to_group("GameManager")
 	money_changed.emit(player_money)
 
@@ -29,3 +31,4 @@ func purchase(price: int) -> bool:
 func add_money(amount: int):
 	player_money += amount
 	money_changed.emit(player_money)
+	tutorial.complete_task_by_type("sell_items")
