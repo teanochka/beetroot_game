@@ -7,9 +7,11 @@
 radius = 4.0
 
 [node name="Item" type="Area2D"]
+y_sort_enabled = true
 script = ExtResource("1_s8enn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("1_4gq7n")
 offset = Vector2(0, -1)

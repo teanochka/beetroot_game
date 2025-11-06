@@ -45,9 +45,11 @@ _data = {
 }
 
 [node name="Building" type="StaticBody2D"]
+y_sort_enabled = true
 script = ExtResource("1_uvy8r")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("1_n8bkc")
 

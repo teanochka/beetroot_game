@@ -1,15 +1,17 @@
 extends TileMapLayer
 
 @onready var ghost_building = $GhostBuilding
+@onready var building_ui = $"../BuildingUI"
 
 var selected_building_key: String = ""
 var selected_building_texture: Texture2D
 var is_placing: bool = false
+var is_deleting: bool = false
 var occupied_cells:={}
 var busy_stations: Dictionary = {}
 # Текущее направление конвейера (по умолчанию - вправо)
 var current_conveyor_direction: int = 0
-const MAX_BUILDING_HEIGHT: int = -4
+const MAX_BUILDING_HEIGHT: int = -3
 
 var conveyor_directions = [
 	{
@@ -47,6 +49,9 @@ func _ready():
 	else:
 		print("BuildingPlacer: ОШИБКА: GameManager не найден!")
 
+func is_height_allowed(cell: Vector2i) -> bool:
+	return cell.y >= MAX_BUILDING_HEIGHT
+
 func _on_building_selected(building_key: String, texture: Texture2D):
 	print("BuildingPlacer: Получен сигнал building_selected для: ", building_key)
 	selected_building_key = building_key
@@ -70,7 +75,7 @@ func _input(event):
 		
 		# Дополнительная информация о клетке
 		if is_cell_occupied(cell):
-			print("  Клетка занята постройкой: ", occupied_cells[cell])
+			building_ui.open_building_ui(occupied_cells[cell])
 		else:
 			print("  Клетка свободна")
 			
@@ -84,8 +89,9 @@ func _input(event):
 	
 		var offset = Vector2(0, (cell_size.y / 2) - (sprite_height / 2))
 		ghost_building.position = map_to_local(cell) + offset
-
-		if is_cell_occupied(cell):
+		if not is_height_allowed(cell):
+			ghost_building.modulate = Color(1, 0.2, 0.2, 0.7)
+		elif is_cell_occupied(cell):
 			ghost_building.modulate = Color(1, 0.3, 0.3, 0.7)
 		else:
 			ghost_building.modulate = Color(0.3, 1, 0.3, 0.7)
@@ -126,6 +132,12 @@ func is_cell_occupied(cell: Vector2i) -> bool:
 func try_place_building():
 	var cell = get_mouse_cell()
 	
+	# Проверяем высоту
+	if not is_height_allowed(cell):
+		print("Нельзя строить выше клетки Y = ", MAX_BUILDING_HEIGHT, "! Текущая клетка: ", cell)
+		ghost_building.modulate = Color(1, 0.2, 0.2, 0.7) 
+		return
+	
 	if is_cell_occupied(cell):
 		print("Клетка уже занята!")
 		print(occupied_cells[cell]) 
@@ -153,6 +165,9 @@ func create_building(building_key: String, position: Vector2, texture: Texture2D
 	building_instance.position = position 
 	building_instance.get_node("Sprite2D").texture = texture
 	
+	# Устанавливаем Z-index на основе Y-координаты для правильного порядка отрисовки
+	building_instance.z_index = int(position.y)
+	
 	building_instance.set_meta("building_type", building_key)
 	
 	var parent = get_parent()
@@ -162,7 +177,7 @@ func create_building(building_key: String, position: Vector2, texture: Texture2D
 		parent.add_child(building_instance)
 	
 	print("Постройка размещена: ", building_key)
-
+	
 func cancel_placement():
 	finish_placement()
 
@@ -234,3 +249,30 @@ func set_station_busy(cell: Vector2i, busy: bool):
 	busy_stations[cell] = busy
 	print(cell, busy)
 	print("Текущие занятые станции: ", busy_stations)
+
+
+func show_conveyor_ghost(show: bool, cell: Vector2i = Vector2i.ZERO):
+	if show:
+		ghost_building.texture = load("res://assets/conveyorR.png")
+		ghost_building.modulate = Color(1, 1, 0, 0.7)  # Желтый цвет
+		
+		var cell_size = tile_set.tile_size
+		var sprite_height = ghost_building.texture.get_height()
+		var offset = Vector2(0, (cell_size.y / 2) - (sprite_height / 2))
+		ghost_building.position = map_to_local(cell) + offset
+		
+		ghost_building.visible = true
+		print("Показан желтый призрак конвейера в клетке: ", cell)
+	else:
+		ghost_building.visible = false
+		print("Скрыт желтый призрак конвейера")
+
+func enter_delete_mode():
+	is_deleting = true
+	is_placing = false
+	ghost_building.visible = false
+	print("Режим удаления построек активирован. Нажмите ESC для выхода.")
+
+func exit_delete_mode():
+	is_deleting = false
+	print("Режим удаления построек деактивирован.")

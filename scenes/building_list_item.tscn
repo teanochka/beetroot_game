@@ -15,7 +15,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("2_whvsx")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="ItemInfo" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -24,13 +24,17 @@ size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 10
 
 [node name="ItemName" type="Label" parent="ItemInfo"]
+custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 25
 text = "Мойка"
+autowrap_mode = 2
 
 [node name="ItemDescription" type="Label" parent="ItemInfo"]
+custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
+autowrap_mode = 2
 
 [node name="BuyButton" type="Button" parent="ItemInfo"]
 layout_mode = 2

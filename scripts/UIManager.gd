@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+@onready var deconstruction_label = $DeconstructionLabel
 var money_label: Label
 var building_menu: Panel
 var buildings_list: VBoxContainer
@@ -13,6 +14,13 @@ var building_data = [
 		"price": 1,
 		"description": "Основа производства",
 		"texture": "res://assets/conveyorR.png"
+	},
+	{
+		"key": "splitter",
+		"name": "Разделитель",
+		"price": 5,
+		"description": "Разделяет поток предметов на 2 линии",
+		"texture": "res://assets/splitterR.png"
 	},
 	{
 		"key": "cleaner", 
@@ -55,7 +63,7 @@ func _ready():
 	# Находим основные ноды
 	money_label =$MoneyLabel
 	building_menu = $BuildingMenu
-	buildings_list = $BuildingMenu/MarginContainer/BuildingsList
+	buildings_list = $BuildingMenu/MarginContainer/ScrollContainer/BuildingsList
 	
 	if building_menu:
 		building_menu.visible = false
@@ -182,3 +190,10 @@ func _input(event):
 	if event.is_action_pressed("build_menu") and building_menu:
 		building_menu.visible = !building_menu.visible
 		print("Меню видимо: ", building_menu.visible)
+	if event.is_action_pressed("hide_menu"):
+		building_menu.visible = false
+
+func toggle_deconstruction_label(visible: bool):
+	if visible:
+		deconstruction_label.show()
+	else: deconstruction_label.hide() 
