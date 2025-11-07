@@ -131,8 +131,8 @@ shape = SubResource("CircleShape2D_dqkch")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(6, 6)
-limit_left = -207
-limit_top = -150
-limit_right = 224
-limit_bottom = 144
+limit_left = -176
+limit_top = -130
+limit_right = 160
+limit_bottom = 112
 position_smoothing_enabled = true

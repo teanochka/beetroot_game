@@ -15,13 +15,13 @@ var building_data = [
 		"description": "Основа производства",
 		"texture": "res://assets/conveyorR.png"
 	},
-	{
-		"key": "splitter",
-		"name": "Разделитель",
-		"price": 5,
-		"description": "Разделяет поток предметов на 2 линии",
-		"texture": "res://assets/splitterR.png"
-	},
+	#{
+		#"key": "splitter",
+		#"name": "Разделитель",
+		#"price": 5,
+		#"description": "Разделяет поток предметов на 2 линии",
+		#"texture": "res://assets/splitterR.png"
+	#},
 	{
 		"key": "cleaner", 
 		"name": "Очистительная станция",
@@ -123,7 +123,7 @@ func setup_list_item(list_item: Node, building_info: Dictionary):
 	
 	if buy_button:
 		var old_text = buy_button.text
-		buy_button.text = "Купить за " + str(building_info["price"]) + "G"
+		buy_button.text = "Купить за " + str(building_info["price"]) + "Р"
 		
 		# Отключаем старые соединения и подключаем заново
 		if buy_button.is_connected("pressed", _on_building_pressed):
@@ -177,13 +177,13 @@ func update_buttons_availability():
 		if buy_button:
 			var button_text = buy_button.text
 			var price_str = button_text.split(" ")[2]  # Берем третье слово
-			price_str = price_str.replace("G", "")  # Убираем "G"
+			price_str = price_str.replace("R", "")
 			var can_afford = game_manager.can_afford(int(price_str))
 			buy_button.disabled = !can_afford
 
 func update_money_display(new_money: int):
 	if money_label:
-		money_label.text = str(new_money) + "G"
+		money_label.text = str(new_money) + "Р"
 	update_buttons_availability()
 
 func _input(event):
