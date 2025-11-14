@@ -13,7 +13,13 @@ config_version=5
 config/name="beet_factory"
 run/main_scene="uid://xlhfaujtotv5"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://d3dao4xfnpf8e"
+config/windows_native_icon="res://favicon.ico"
+
+[autoload]
+
+Enums="*res://scripts/conveyors/enums.gd"
+Constants="*res://constants.gd"
 
 [display]
 
@@ -25,6 +31,7 @@ window/size/viewport_height=1080
 GameManager=""
 BuildingPlacer=""
 Tutorial=""
+ItemsController=""
 
 [input]
 
