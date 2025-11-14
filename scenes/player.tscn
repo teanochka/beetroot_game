@@ -108,7 +108,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
-radius = 7.071068
+radius = 5.0
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_g2els")
@@ -127,6 +127,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_dqkch")
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -31,6 +31,7 @@ sources/0 = SubResource("TileSetAtlasSource_b121j")
 [sub_resource type="TileSet" id="TileSet_klq6b"]
 
 [node name="Level" type="Node2D" groups=["GameManager"]]
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_ppgk2")
 
@@ -87,7 +88,7 @@ autoplay = true
 parameters/looping = true
 
 [node name="Generator" parent="." instance=ExtResource("14_fpun6")]
-position = Vector2(-103, 5)
+position = Vector2(-103, 4)
 directions = Array[int]([2])
 
 [node name="Belt2" parent="." instance=ExtResource("13_64w2a")]
@@ -96,6 +97,8 @@ directions = Array[int]([2])
 
 [node name="Belt" parent="." instance=ExtResource("13_64w2a")]
 position = Vector2(-71, 5)
+directions = Array[int]([2])
 
 [node name="Splitter" parent="." instance=ExtResource("14_wc255")]
 position = Vector2(-55, 5)
+directions = Array[int]([2, 1, 3])
