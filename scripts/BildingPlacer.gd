@@ -44,7 +44,7 @@ func _ready():
 	add_to_group("BuildingPlacer")
 	ghost_building.visible = false
 	
-	spawn_initial_buildings()
+	#spawn_initial_buildings()
 	
 	var game_manager = get_tree().get_first_node_in_group("GameManager")
 

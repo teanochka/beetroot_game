@@ -13,7 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://cc2eqvd3hnsql" path="res://assets/Напряжённый (дневной).mp3" id="12_8iemx"]
 [ext_resource type="PackedScene" uid="uid://b3panky5js3y5" path="res://scenes/conveyors/belt.tscn" id="13_64w2a"]
 [ext_resource type="PackedScene" uid="uid://bebyktnp23ysv" path="res://scenes/generator.tscn" id="14_fpun6"]
-[ext_resource type="PackedScene" uid="uid://dpcfxudegb82g" path="res://scenes/conveyors/splitter.tscn" id="14_wc255"]
+[ext_resource type="PackedScene" uid="uid://b4bct0jceosh5" path="res://scenes/conveyors/splitter.tscn" id="14_wc255"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b121j"]
 texture = ExtResource("2_mx8sn")
@@ -87,18 +87,22 @@ stream = ExtResource("12_8iemx")
 autoplay = true
 parameters/looping = true
 
+[node name="Splitter_copy" parent="." instance=ExtResource("14_wc255")]
+position = Vector2(-87, 5)
+directions = Array[int]([2, 1, 3])
+
 [node name="Generator" parent="." instance=ExtResource("14_fpun6")]
 position = Vector2(-103, 4)
 directions = Array[int]([2])
 
-[node name="Belt2" parent="." instance=ExtResource("13_64w2a")]
-position = Vector2(-87, 5)
-directions = Array[int]([2])
-
-[node name="Belt" parent="." instance=ExtResource("13_64w2a")]
+[node name="Splitter_copy2" parent="." instance=ExtResource("14_wc255")]
 position = Vector2(-71, 5)
 directions = Array[int]([2])
 
-[node name="Splitter" parent="." instance=ExtResource("14_wc255")]
-position = Vector2(-55, 5)
-directions = Array[int]([2, 1, 3])
+[node name="Belt" parent="." instance=ExtResource("13_64w2a")]
+position = Vector2(-87, 22)
+directions = Array[int]([3])
+
+[node name="Belt2" parent="." instance=ExtResource("13_64w2a")]
+position = Vector2(-39, 5)
+directions = Array[int]([2])

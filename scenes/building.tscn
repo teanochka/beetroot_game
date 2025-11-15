@@ -1,50 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://capshjnhlhcvd"]
+[gd_scene load_steps=9 format=3 uid="uid://capshjnhlhcvd"]
 
 [ext_resource type="Texture2D" uid="uid://cc1u2gyx0d17m" path="res://assets/block.png" id="1_n8bkc"]
 [ext_resource type="Script" uid="uid://2wy5a32ynpw3" path="res://scripts/Building.gd" id="1_uvy8r"]
+[ext_resource type="PackedScene" uid="uid://eent0fo8gcwr" path="res://scenes/conveyors/conveyor_detectors.tscn" id="3_f5uvq"]
+[ext_resource type="PackedScene" uid="uid://11576jk4hasr" path="res://scenes/conveyors/conveyor_inventory.tscn" id="4_gof7m"]
+[ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="5_g3pb6"]
+[ext_resource type="PackedScene" uid="uid://duj0a22bmdyba" path="res://scenes/conveyors/from_direction_controller.tscn" id="6_8lqx8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvy8r"]
-size = Vector2(16, 15)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd2d"]
+size = Vector2(9, 9)
 
-[sub_resource type="Animation" id="Animation_rla3o"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7huw0"]
+size = Vector2(17, 16.5)
 
-[sub_resource type="Animation" id="Animation_ejq8p"]
-resource_name = "working"
-length = 0.6
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.20180023, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 4, 5, 6]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lm2ef"]
-_data = {
-&"RESET": SubResource("Animation_rla3o"),
-&"working": SubResource("Animation_ejq8p")
-}
-
-[node name="Building" type="StaticBody2D"]
+[node name="Building" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_uvy8r")
 
@@ -53,11 +22,31 @@ y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("1_n8bkc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3.5)
-shape = SubResource("RectangleShape2D_uvy8r")
+[node name="ConveyorDetectors" parent="." instance=ExtResource("3_f5uvq")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_lm2ef")
-}
+[node name="ConveyorInventory" parent="." instance=ExtResource("4_gof7m")]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorInventory"]
+shape = SubResource("RectangleShape2D_iwd2d")
+
+[node name="DirectionController" parent="." instance=ExtResource("5_g3pb6")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionController"]
+shape = SubResource("RectangleShape2D_iwd2d")
+
+[node name="FromDirectionController" parent="." instance=ExtResource("6_8lqx8")]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 4.25)
+shape = SubResource("RectangleShape2D_7huw0")
+
+[connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
+[connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]
+[connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]
+[connection signal="direction_changed" from="FromDirectionController" to="." method="_on_from_direction_controller_direction_changed"]
