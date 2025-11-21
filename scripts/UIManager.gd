@@ -1,201 +1,99 @@
 extends CanvasLayer
 
-@onready var deconstruction_label = $DeconstructionLabel
-var money_label: Label
-var building_menu: Panel
-var buildings_list: VBoxContainer
+@onready var deconstruction_label: Label = $DeconstructionLabel
+@onready var money_label: Label = $MoneyLabel
+@onready var building_menu: Panel = $BuildingMenu
+@onready var buildings_list: VBoxContainer = $BuildingMenu/MarginContainer/ScrollContainer/BuildingsList
 
 var list_item_scene = preload("res://scenes/building_list_item.tscn")
+var building_data_dir = "res://resources/buildings/"
+var building_resources: Array[BuildingData] = []
+var player_money: int = 4000
+var is_visible: bool = false
+var can_build: bool = true
+signal building_selected(building_data: BuildingData) 
 
-var building_data = [
-	{
-		"key": "conveyor",
-		"name": "Конвейер",
-		"price": 1,
-		"description": "Основа производства",
-		"texture": "res://assets/conveyorR.png"
-	},
-	#{
-		#"key": "splitter",
-		#"name": "Разделитель",
-		#"price": 5,
-		#"description": "Разделяет поток предметов на 2 линии",
-		#"texture": "res://assets/splitterR.png"
-	#},
-	{
-		"key": "cleaner", 
-		"name": "Очистительная станция",
-		"price": 50,
-		"description": "Очищает свеклу от примесей",
-		"texture": "res://assets/cleaner.png"
-	},
-	{
-		"key": "diffuser", 
-		"name": "Диффузор",
-		"price": 100,
-		"description": "Извлекает сахарный сироп",
-		"texture": "res://assets/diffuser.png"
-	},
-	{
-		"key": "evaporator",
-		"name": "Выпаривающий аппарат", 
-		"price": 200,
-		"description": "Выпаривает воду из сиропа",
-		"texture": "res://assets/evaporator.png"
-	},
-	{
-		"key": "crystallizer",
-		"name": "Кристаллизатор",
-		"price": 1000,
-		"description": "Создает сахарные кристаллы", 
-		"texture": "res://assets/crystallizer.png"
-	},
-	{
-		"key": "packer",
-		"name": "Упаковщик",
-		"price": 2000,
-		"description": "Фасует готовый сахар",
-		"texture": "res://assets/packer.png"
-	}
-]
 
 func _ready():
-	# Находим основные ноды
-	money_label =$MoneyLabel
-	building_menu = $BuildingMenu
-	buildings_list = $BuildingMenu/MarginContainer/ScrollContainer/BuildingsList
+	building_menu.hide()
+	clear_buildings_list()
+	load_building_resources()
+	money_label.update_display(player_money)
 	deconstruction_label.hide()
-	if building_menu:
-		building_menu.visible = false
 	
-	print("Всего построек в данных: ", building_data.size())
-	await get_tree().process_frame
-	var game_manager = get_tree().get_first_node_in_group("GameManager")
-	if not game_manager:
-		push_error("GameManager не найден!")
-		return
-
-
-	populate_buildings_list()
-	game_manager.money_changed.connect(update_money_display)
-
-
-func populate_buildings_list():
-	if not buildings_list:
-		print("ОШИБКА: BuildingsList не найден!")
-		return
 	
-	# Очищаем список
+func clear_buildings_list():
 	for child in buildings_list.get_children():
 		child.queue_free()
-	
-	# Создаем элементы из сцены
-	for i in range(building_data.size()):
-		var building = building_data[i]
+		
+func load_building_resources():
+	var dir = DirAccess.open(building_data_dir)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".tres"):
+				var resource_path = building_data_dir + file_name
+				var building_data = load(resource_path)
+				if building_data is BuildingData:
+					building_resources.append(building_data)
+			file_name = dir.get_next()
+		
+		sort_buildings_by_price()
+		populate_buildings_list()
+
+func sort_buildings_by_price():
+	building_resources.sort_custom(func(a, b): return a.build_price < b.build_price)
+
+func populate_buildings_list():
+	for building_data in building_resources:
 		var list_item = list_item_scene.instantiate()
 		buildings_list.add_child(list_item)
+		list_item.set_affordability(can_afford(building_data.build_price))
+		list_item.buy_button.pressed.connect(_on_building_pressed.bind(building_data))
 		
-		# Ждем немного перед настройкой
-		await get_tree().create_timer(0.01).timeout
-		setup_list_item(list_item, building)
-
-func setup_list_item(list_item: Node, building_info: Dictionary):
-	
-	# Находим дочерние ноды и меняем их значения
-	var item_name = list_item.get_node("ItemInfo/ItemName") as Label
-	var item_description = list_item.get_node("ItemInfo/ItemDescription") as Label
-	var buy_button = list_item.get_node("ItemInfo/BuyButton") as Button
-	var item_image = list_item.get_node("ItemImage") as TextureRect
-	
-	# Отладочная информация
-	print("  ItemName найден: ", item_name != null)
-	print("  ItemDescription найден: ", item_description != null)
-	print("  BuyButton найден: ", buy_button != null)
-	print("  ItemImage найден: ", item_image != null)
-	
-	if item_name:
-		item_name.text = building_info["name"]
-	else:
-		print("  ОШИБКА: ItemName не найден!")
-	
-	if item_description:
-		item_description.text = building_info["description"]
-	
-	if buy_button:
-		var old_text = buy_button.text
-		buy_button.text = "Купить за " + str(building_info["price"]) + "Р"
+		if not list_item.is_connected("prevent_buildind", _on_list_item_prevent_buildind):
+			list_item.prevent_buildind.connect(_on_list_item_prevent_buildind)
+		if not list_item.is_connected("continue_building", _on_list_item_continue_building):
+			list_item.continue_building.connect(_on_list_item_continue_building)
 		
-		# Отключаем старые соединения и подключаем заново
-		if buy_button.is_connected("pressed", _on_building_pressed):
-			buy_button.disconnect("pressed", _on_building_pressed)
-		buy_button.pressed.connect(_on_building_pressed.bind(building_info["key"], building_info["price"]))
-	
-	if item_image:
-		var texture = load(building_info["texture"])
-		if texture:
-			item_image.texture = texture
-		else:
-			print("  ОШИБКА: Текстура не загружена: ", building_info["texture"])
-	
-	print("---")
+		list_item.setup(building_data)
 
-func _on_building_pressed(building_key: String, price: int):
-	print("Нажата кнопка для: ", building_key, " цена: ", price)
-	var game_manager = get_tree().get_first_node_in_group("GameManager")
-	
-	if game_manager and game_manager.purchase(price):
-		print("Куплена постройка: ", building_key)
-		update_buttons_availability()
+func _on_building_pressed(building_data: BuildingData):
+	if can_afford(building_data.build_price):
+		building_selected.emit(building_data)
 		
-		# Находим словарь постройки вручную
-		var building_info: Dictionary = {}
-		for b in building_data:
-			if b["key"] == building_key:
-				building_info = b
-				break
-		
-		if building_info:
-			var texture = load(building_info["texture"])
-			game_manager.select_building(building_key, texture)
-			print("UIManager: building_selected вызван для ", building_key)
-		else:
-			print("Ошибка: не найден building_key ", building_key)
-	else:
-		print("Недостаточно денег")
-
-
-
+func try_buy_building(building_price) -> bool:
+	if can_build:
+		if can_afford(building_price):
+			player_money -= building_price
+			money_label.update_display(player_money)
+			update_buttons_availability()
+			return true
+		else: 
+			update_buttons_availability()
+			money_label.shake_and_flash()
+			return false
+	else: return false
+	
 func update_buttons_availability():
-	var game_manager = get_tree().get_first_node_in_group("GameManager")
-	if not game_manager:
-		return
-	
-	print("Обновляем доступность кнопок...")
-	
 	for list_item in buildings_list.get_children():
-		var buy_button = list_item.get_node("ItemInfo/BuyButton") as Button
-		if buy_button:
-			var button_text = buy_button.text
-			var price_str = button_text.split(" ")[2]  # Берем третье слово
-			price_str = price_str.replace("R", "")
-			var can_afford = game_manager.can_afford(int(price_str))
-			buy_button.disabled = !can_afford
+		list_item.set_affordability(can_afford(list_item.get_building_price()))
+		
+func can_afford(build_price) -> bool:
+	return player_money >= build_price
 
-func update_money_display(new_money: int):
-	if money_label:
-		money_label.text = str(new_money) + "Р"
-	update_buttons_availability()
+func _input(event: InputEvent):
+	if Input.is_action_just_pressed("build_menu"):
+		if is_visible:
+			building_menu.hide()
+		else: 
+			building_menu.show()
+		is_visible = !is_visible
 
-func _input(event):
-	if event.is_action_pressed("build_menu") and building_menu:
-		var tutorial = get_tree().get_first_node_in_group("Tutorial")
-		tutorial.complete_task_by_type("open_menu")
-		building_menu.visible = !building_menu.visible
-		print("Меню видимо: ", building_menu.visible)
-	if event.is_action_pressed("hide_menu"):
-		building_menu.visible = false
 
-func toggle_deconstruction_label(visible: bool):
-	if visible:
-		deconstruction_label.show()
-	else: deconstruction_label.hide() 
+func _on_list_item_continue_building() -> void:
+	can_build = true
+
+func _on_list_item_prevent_buildind() -> void:
+	can_build = false

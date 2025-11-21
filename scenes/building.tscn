@@ -38,15 +38,17 @@ shape = SubResource("RectangleShape2D_iwd2d")
 [node name="FromDirectionController" parent="." instance=ExtResource("6_8lqx8")]
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, 4.25)
+position = Vector2(0, 3.25)
 shape = SubResource("RectangleShape2D_7huw0")
 
 [connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
 [connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]
 [connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]
 [connection signal="direction_changed" from="FromDirectionController" to="." method="_on_from_direction_controller_direction_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
