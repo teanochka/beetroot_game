@@ -19,21 +19,6 @@ offset_top = -300.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Container" type="Control" parent="Panel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-
-[node name="TextureRect" type="Button" parent="Panel/Container"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-size_flags_horizontal = 8
-icon = ExtResource("2_ph3nu")
-icon_alignment = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
@@ -57,3 +42,18 @@ theme_override_constants/separation = 8
 
 [node name="Task" parent="Panel/MarginContainer/ScrollContainer/TaskContainer" instance=ExtResource("2_8ho6b")]
 layout_mode = 2
+
+[node name="Container" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="TextureRect" type="Button" parent="Panel/Container"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 8
+icon = ExtResource("2_ph3nu")
+icon_alignment = 2

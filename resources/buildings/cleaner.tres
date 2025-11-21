@@ -8,10 +8,11 @@
 script = ExtResource("2_o1tv7")
 building_name = "Очистительная станция"
 sprite = ExtResource("2_k674c")
-processing_time = 3
+processing_time = 5
 input_resource_type = "beetroot"
 output_item_data = ExtResource("1_1fyt6")
 description = "Очищает свеклу от примесей"
-build_price = 50
+build_price = 200
+building_type = "cleaner"
 sprite_offset = -5.5
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

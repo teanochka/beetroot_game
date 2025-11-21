@@ -34,12 +34,9 @@ func sell_item(item: Node2D):
 	var item_data = item.get_item_data()
 	if item_data:
 		var sell_value = item_data.value
-		var item_type = item_data.item_type
-			
-		print("Selling item: ", item_type, " for ", sell_value)
 			
 		item_sold.emit(sell_value)
-			
+		$"../Tutorial".complete_task("sell_item")	
 		item.queue_free()
 			
 	else:

@@ -17,6 +17,7 @@ func _physics_process(_delta):
 			print("Demolished", building_data.building_name)
 			building_demolished.emit(building_data.build_price)
 			audio_controller.play_placed()
+			EventBus.emit_task_completed("delete_building")
 		else:
 			print("No building to demolish at this location")
 			audio_controller.play_error()

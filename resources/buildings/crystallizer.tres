@@ -8,9 +8,11 @@
 script = ExtResource("1_ucg55")
 building_name = "Кристаллизатор"
 sprite = ExtResource("3_0puor")
-processing_time = 6
+processing_time = 20
 input_resource_type = "syrup"
 output_item_data = ExtResource("1_na4j1")
 description = "Создает сахарные кристаллы"
 build_price = 1000
+building_type = "crystallizer"
+sprite_offset = -13.5
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

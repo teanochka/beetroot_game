@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d04powrkjymau"]
+
+[ext_resource type="Script" uid="uid://cv576a4qsjkng" path="res://scripts/ghost_building.gd" id="1_3x2oy"]
+[ext_resource type="Script" uid="uid://bpyh72mhyov8a" path="res://scripts/ghost_sprite_controller.gd" id="2_hdtfv"]
+
+[node name="GhostBuilding" type="Node2D"]
+script = ExtResource("1_3x2oy")
+
+[node name="GhostSpriteController" type="Sprite2D" parent="."]
+script = ExtResource("2_hdtfv")

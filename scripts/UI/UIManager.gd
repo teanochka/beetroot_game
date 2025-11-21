@@ -12,6 +12,8 @@ var player_money: int = 4000
 var is_visible: bool = false
 var can_build: bool = true
 var deconstruction_mode: bool = false
+
+
 signal building_selected(building_data: BuildingData) 
 signal deconstruction_started()
 signal deconstruction_finished()
@@ -64,6 +66,7 @@ func populate_buildings_list():
 
 func _on_building_pressed(building_data: BuildingData):
 	if can_afford(building_data.build_price):
+		EventBus.emit_task_completed("select_conveyor")
 		building_selected.emit(building_data)
 		
 func try_buy_building(building_price) -> bool:
@@ -88,6 +91,7 @@ func can_afford(build_price) -> bool:
 
 func _input(event: InputEvent):
 	if Input.is_action_just_pressed("build_menu"):
+		EventBus.emit_task_completed("build_menu")
 		_toggle_build_menu()
 	
 	if Input.is_action_just_pressed("hide_menu"):
@@ -142,3 +146,12 @@ func _on_list_item_prevent_buildind() -> void:
 func _on_deconstructor_building_demolished(refund_amount: Variant) -> void:
 	player_money += refund_amount
 	money_label.update_display(player_money)
+
+
+func _on_exporter_item_sold(item_value: int) -> void:
+	player_money += item_value
+	money_label.update_display(player_money)
+
+
+func _on_building_menu_focus_entered() -> void:
+	pass # Replace with function body.

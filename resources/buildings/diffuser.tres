@@ -8,10 +8,11 @@
 script = ExtResource("2_p6jqt")
 building_name = "Диффузор"
 sprite = ExtResource("2_k6ue3")
-processing_time = 3
+processing_time = 10
 input_resource_type = "chips"
 output_item_data = ExtResource("1_7hebe")
 description = "Извлекает сахарный сироп"
-build_price = 100
+build_price = 200
+building_type = "diffuser"
 sprite_offset = -5.5
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

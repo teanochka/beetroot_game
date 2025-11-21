@@ -8,6 +8,6 @@ script = ExtResource("1_72am8")
 building_name = "Конвейер"
 sprite = ExtResource("2_2aad3")
 description = "Основа производства"
-build_price = 1
+build_price = 10
 building_type = "conveyor"
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

@@ -9,7 +9,9 @@ var from_direction: Enums.Direction = Enums.Direction.Left
 @onready var from_controller : FromDirectionController = $FromDirectionController
 @onready var sprite = $Sprite2D
 @onready var timer = $Timer
+@onready var progress_bar: Node2D = $ProgressBar
 var is_processing: bool = false 
+
 
 func determine_from_direction():
 	from_direction = from_controller.get_from_direction(to_direction)
@@ -29,7 +31,12 @@ func _ready():
 		if building_data.processing_time and timer:
 			timer.wait_time = building_data.processing_time
 		else: timer.wait_time = 5
-		
+	progress_bar.hide()
+
+func _process(_delta):
+	if is_processing and timer and progress_bar:
+		var progress = 1.0 - (timer.time_left / timer.wait_time)
+		progress_bar.update_progress(progress * 100)
 
 func update_to_direction(to_directions):
 	to_direction = to_directions[0]
@@ -40,6 +47,10 @@ func _on_conveyor_inventory_item_held():
 	if timer:
 		is_processing = true
 		print("Starting processing for ", timer.wait_time, " seconds")
+		
+		progress_bar.show()
+		progress_bar.update_progress(0)
+		
 		await get_tree().process_frame
 		$ConveyorDetectors.checking = false
 		
@@ -49,6 +60,8 @@ func _on_conveyor_inventory_item_held():
 
 func _on_timer_timeout():
 	is_processing = false	
+	progress_bar.hide()
+	progress_bar.update_progress(0)
 	$ConveyorDetectors.start_checking()
 
 func transform_output_item(item: Node2D):

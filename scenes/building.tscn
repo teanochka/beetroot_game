@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://capshjnhlhcvd"]
+[gd_scene load_steps=10 format=3 uid="uid://capshjnhlhcvd"]
 
 [ext_resource type="Texture2D" uid="uid://cc1u2gyx0d17m" path="res://assets/block.png" id="1_n8bkc"]
 [ext_resource type="Script" uid="uid://2wy5a32ynpw3" path="res://scripts/building.gd" id="1_uvy8r"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://11576jk4hasr" path="res://scenes/conveyors/conveyor_inventory.tscn" id="4_gof7m"]
 [ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="5_g3pb6"]
 [ext_resource type="PackedScene" uid="uid://duj0a22bmdyba" path="res://scenes/conveyors/from_direction_controller.tscn" id="6_8lqx8"]
+[ext_resource type="PackedScene" uid="uid://bseiny7alu7ow" path="res://scenes/progress_bar.tscn" id="7_gof7m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd2d"]
 size = Vector2(9, 9)
@@ -46,6 +47,10 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(0, 3.25)
 shape = SubResource("RectangleShape2D_7huw0")
+
+[node name="ProgressBar" parent="." instance=ExtResource("7_gof7m")]
+z_index = 22
+position = Vector2(0, -15)
 
 [connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
 [connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]

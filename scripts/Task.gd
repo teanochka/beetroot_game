@@ -1,7 +1,7 @@
 extends HBoxContainer
 
 @onready var checkbox_texture = $Container/Checkbox
-@onready var label = $Task
+@onready var label: RichTextLabel = $Task
 
 var checked_texture = preload("res://assets/checkbox_checked.png")
 var unchecked_texture = preload("res://assets/checkbox.png")
@@ -12,7 +12,8 @@ func set_task_text(text: String):
 func set_completed(completed: bool):
 	if completed:
 		checkbox_texture.texture = checked_texture
-		label.modulate = Color(0.5, 0.5, 0.5)  # Серый цвет для выполненных
+		# Используем add_theme_color_override вместо modulate
+		label.add_theme_color_override("default_color", Color(0.5, 0.5, 0.5))
 	else:
 		checkbox_texture.texture = unchecked_texture
-		label.modulate = Color(1, 1, 1)  # Белый цвет для активных
+		label.add_theme_color_override("default_color", Color(1, 1, 1))

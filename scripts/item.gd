@@ -1,14 +1,9 @@
 extends Node2D
 class_name Item
 @export var item_data: ItemData
-var completed_item_types: Array[String] = []
 
 func _ready():
-	var item_type = item_data.item_type
-	#if !completed_item_types.has(item_type):
-		#Tutorial.complete_task_by_product(item_type)
-		#completed_item_types.append(item_type)
-		
+	EventBus.emit_task_completed(item_data.item_type)
 	if item_data.texture:
 		var sprite = $Sprite2D
 		if sprite:

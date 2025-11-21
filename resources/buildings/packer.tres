@@ -8,9 +8,11 @@
 script = ExtResource("1_a4yfj")
 building_name = "Упаковщик"
 sprite = ExtResource("3_2jun6")
-processing_time = 7
+processing_time = 30
 input_resource_type = "wet_sugar"
 output_item_data = ExtResource("1_hpdkp")
 description = "Фасует готовый сахар"
 build_price = 2000
+building_type = "packer"
+sprite_offset = -3.5
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

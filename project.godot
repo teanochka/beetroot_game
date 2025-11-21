@@ -21,7 +21,7 @@ config/windows_native_icon="res://favicon.ico"
 Enums="*res://scripts/conveyors/enums.gd"
 Constants="*res://constants.gd"
 BuildingCoordinator="*res://scripts/buildings/BuildingCoordinator.gd"
-Tutorial="*res://scenes/tutorial.tscn"
+EventBus="*res://scripts/EventBus.gd"
 
 [display]
 

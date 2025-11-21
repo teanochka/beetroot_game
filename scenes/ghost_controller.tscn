@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://6evlux51r022"]
+
+[ext_resource type="Script" uid="uid://celbiiss2ox3l" path="res://scripts/ghost_controller.gd" id="1_c6y70"]
+[ext_resource type="PackedScene" uid="uid://d04powrkjymau" path="res://scenes/ghost_building.tscn" id="2_43rey"]
+
+[node name="GhostController" type="Node2D"]
+script = ExtResource("1_c6y70")
+
+[node name="GhostBuilding" parent="." instance=ExtResource("2_43rey")]
+z_index = 25

@@ -2,114 +2,92 @@ extends CanvasLayer
 
 @onready var task_container: VBoxContainer = $Panel/MarginContainer/ScrollContainer/TaskContainer
 @onready var task_scene = preload("res://scenes/task.tscn") 
-@onready var building_placer = $"../BuildingPlacer"
-
-# Словарь с переводами продуктов
-var product_names = {
-	"raw": "сырая свекла",
-	"chips": "свекольная мякоть", 
-	"juice": "свекольный сок",
-	"syrup": "сахарный сироп",
-	"wet_sugar": "влажный сахар",
-	"packed_sugar": "упакованный сахар"
-}
+@onready var scroll_container: ScrollContainer = $Panel/MarginContainer/ScrollContainer
+var completed_tasks: Array[String] = []  # Храним типы выполненных заданий
+var current_task_type: String = ""  # Текущий активный квест
 
 var tasks = [
 	{
 		"text": "Откройте меню строительства с помощью B",
-		"complete": false,
-		"type": "open_menu"
+		"type": "build_menu"
 	},
 	{
-		"text": "Постройте конвейер в указанной точке",
-		"complete": false,
-		"type": "build_conveyor"
+		"text": "Выберите конвейер",
+		"type": "select_conveyor"
 	},
 	{
 		"text": "Разверните конвейер с помощью R",
-		"complete": false,
-		"type": "rotate_conveyor"
+		"type": "rotate"
 	},
 	{
-		"text": "Перейдите в режим сноса на Q и удалите постройку",
-		"complete": false,
+		"text": "Постройте конвейер",
+		"type": "conveyor"
+	},
+	{
+		"text": "Постройте очистительную станцию",
+		"type": "cleaner"
+	},
+	{
+		"text": "Произведите свекольную мякоть с помощью очистительной станции",
+		"type": "chips"
+	},
+	{
+		"text": "Видите тоннель в стене справа сверху? Это экспортер. Доведите до него предмет, чтобы он продался.",
+		"type": "sell_item"
+	},
+	{
+		"text": "Перейдите в режим сноса на Q и удалите любую постройку, нажав на неё ЛКМ",
 		"type": "delete_building"
 	},
 	{
-		"text": "Постройте очистительную станцию. Станции выгружают предметы справа от себя. Поставьте конвейер с правой стороны, чтобы продукт не пропал",
-		"complete": false,
-		"building": "cleaner",
-		"type": "build_cleaner"
+		"text": "Постройте диффузор",
+		"type": "diffuser"
 	},
 	{
-		"text": "Кликните на постройку чтобы открыть ее настройки",
-		"complete": false,
-		"type": "open_building_ui"
+		"text": "Произведите свекольный сок из свекольной мякоти с помощью диффузора",
+		"type": "juice"
 	},
 	{
-		"text": "Продайте предметы, доведя их до экспортера (тоннель справа сверху) по конвейерам",
-		"complete": false,
-		"type": "sell_items"
+		"text": "Следующая постройка слишком дорогая. Давайте увеличим наши доходы - постройте разделитель, чтобы вести свеклу по нескольким линиям",
+		"type": "splitter"
 	},
 	{
-		"text": "Постройте диффузор и переработайте %s в %s" % [product_names["chips"], product_names["juice"]],
-		"complete": false,
-		"building": "diffuser", 
-		"product": "juice",
-		"type": "build_diffuser"
+		"text": "Постройте выпаривающий аппарат",
+		"type": "evaporator"
 	},
 	{
-		"text": "Постройте выпаривающий аппарат и получите %s из %s" % [product_names["syrup"], product_names["juice"]],
-		"complete": false,
-		"building": "evaporator",
-		"product": "syrup",
-		"type": "build_evaporator"
+		"text": "Произведите сахарный сироп из свекольного сока с помощью выпаривающего апарата",
+		"type": "syrup"
 	},
 	{
-		"text": "Постройте кристаллизатор и создайте %s из %s" % [product_names["wet_sugar"], product_names["syrup"]],
-		"complete": false,
-		"building": "crystallizer",
-		"product": "wet_sugar",
-		"type": "build_crystallizer"
+		"text": "Постройте кристаллизатор",
+		"type": "crystallizer"
 	},
 	{
-		"text": "Постройте упаковщик и получите готовый %s" % product_names["packed_sugar"],
-		"complete": false,
-		"building": "packer",
-		"product": "packed_sugar",
-		"type": "build_packer"
+		"text": "Произведите влажный сахар из сахарного сиропа",
+		"type": "wet_sugar"
 	},
 	{
-		"text": "Создайте полную производственную цепочку от сырья до упакованного сахара",
-		"complete": false,
-		"type": "complete_chain"
-	}
+		"text": "Постройте упаковщик",
+		"type": "packer"
+	},
+	{
+		"text": "Произведите упакованный сахар",
+		"type": "packed_sugar"
+	},
 ]
 
-var completed_tasks: int = 0
-var current_task_index: int = 0
-
 func _ready() -> void:
-	if not task_container:
-		task_container = find_child("TaskContainer", true, false)
-		if task_container:
-			print("Found TaskContainer by name")
-		else:
-			print("ERROR: TaskContainer not found by name either")
-	
-	await get_tree().process_frame
-	render_tasks()
-	# Добавляем в группу для легкого доступа из других скриптов
-	add_to_group("Tutorial")
+	EventBus.tutorial_task_completed.connect(complete_task)
+	update_current_task()
 	render_tasks()
 
 func render_tasks():
-	# Очищаем контейнер перед отрисовкой
 	for child in task_container.get_children():
 		child.queue_free()
 	
-	# Показываем выполненные задания + текущее активное
-	var tasks_to_show = completed_tasks + 1
+	var next_task_index = get_next_task_index()
+	var tasks_to_show = next_task_index + 1
 	if tasks_to_show > tasks.size():
 		tasks_to_show = tasks.size()
 	
@@ -118,53 +96,51 @@ func render_tasks():
 		var task_instance = task_scene.instantiate()
 		task_container.add_child(task_instance)
 		
-		# Настраиваем текст и состояние задания
+		var is_completed = is_task_completed(task.type)
 		task_instance.set_task_text(task.text)
-		task_instance.set_completed(task.complete)
-		
+		task_instance.set_completed(is_completed)
+	
+	update_current_task()
+	scroll_to_bottom()
 
-# Публичные методы для других скриптов
-func complete_current_task():
-	if completed_tasks < tasks.size():
-		tasks[completed_tasks].complete = true
-		completed_tasks += 1
-		render_tasks()
-		print("Задание выполнено! Текущий прогресс: ", completed_tasks, "/", tasks.size())
+func scroll_to_bottom():
+	await get_tree().process_frame
+	var v_scroll_bar = scroll_container.get_v_scroll_bar()
+	if v_scroll_bar:
+		scroll_container.scroll_vertical = v_scroll_bar.max_value
 
-func complete_task_by_type(task_type: String):
+func is_task_completed(task_type: String) -> bool:
+	return completed_tasks.has(task_type)
+
+func get_next_task_index() -> int:
 	for i in range(tasks.size()):
-		var task = tasks[i]
-		if task.get("type") == task_type and not task.complete:
-			# Если это следующее задание по порядку, просто выполняем его
-			if i == completed_tasks:
-				complete_current_task()
-			# Если это задание из будущего, отмечаем его как выполненное
-			elif i > completed_tasks:
-				task.complete = true
-				render_tasks()
-			break
+		if not is_task_completed(tasks[i].type):
+			return i
+	return tasks.size()
 
-func complete_task_by_building(building_key: String):
-	for i in range(tasks.size()):
-		var task = tasks[i]
-		if task.has("building") and task.building == building_key and not task.complete:
-			if i == completed_tasks:
-				complete_current_task()
-			elif i > completed_tasks:
-				task.complete = true
-				render_tasks()
-			break
+func update_current_task():
+	var previous_task = current_task_type
+	var next_task_index = get_next_task_index()
+	
+	if next_task_index < tasks.size():
+		current_task_type = tasks[next_task_index].type
+	else:
+		current_task_type = ""
+	
+	if current_task_type != previous_task:
+		EventBus.emit_current_task_changed(current_task_type)
+		print("Текущий квест изменен: ", current_task_type)
 
-func complete_task_by_product(product_key: String):
-	for i in range(tasks.size()):
-		var task = tasks[i]
-		if task.has("product") and task.product == product_key and not task.complete:
-			if i == completed_tasks:
-				complete_current_task()
-			elif i > completed_tasks:
-				task.complete = true
-				render_tasks()
-			break
+func complete_task(task_type: String):
+	if is_task_completed(task_type):
+		return
+	
+	completed_tasks.append(task_type)
+	
+	print("Задание выполнено: ", task_type)
+	print("Выполнено заданий: ", completed_tasks.size(), "/", tasks.size())
+	
+	render_tasks()
 
-func _process(delta: float) -> void:
-	pass
+func is_current_task(task_type: String) -> bool:
+	return current_task_type == task_type
