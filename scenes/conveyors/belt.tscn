@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://b3panky5js3y5"]
+
+[ext_resource type="Script" uid="uid://b6l443p2x7hne" path="res://scripts/conveyors/belt.gd" id="1_xiiba"]
+[ext_resource type="PackedScene" uid="uid://eent0fo8gcwr" path="res://scenes/conveyors/conveyor_detectors.tscn" id="2_2qhn4"]
+[ext_resource type="PackedScene" uid="uid://cy4vmao5hebqh" path="res://scenes/conveyors/conveyor_sprite_controller.tscn" id="3_ojj0m"]
+[ext_resource type="PackedScene" uid="uid://11576jk4hasr" path="res://scenes/conveyors/conveyor_inventory.tscn" id="4_ojj0m"]
+[ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="5_xewfx"]
+[ext_resource type="PackedScene" uid="uid://duj0a22bmdyba" path="res://scenes/conveyors/from_direction_controller.tscn" id="6_2his3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chvdd"]
+size = Vector2(9, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ojj0m"]
+size = Vector2(17, 16.5)
+
+[node name="Belt" type="Node2D"]
+script = ExtResource("1_xiiba")
+
+[node name="ConveyorDetectors" parent="." instance=ExtResource("2_2qhn4")]
+
+[node name="ConveyorSpriteController" parent="." instance=ExtResource("3_ojj0m")]
+centered = true
+hframes = 5
+
+[node name="ConveyorInventory" parent="." instance=ExtResource("4_ojj0m")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorInventory"]
+shape = SubResource("RectangleShape2D_chvdd")
+
+[node name="DirectionController" parent="." instance=ExtResource("5_xewfx")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionController"]
+shape = SubResource("RectangleShape2D_chvdd")
+
+[node name="FromDirectionController" parent="." instance=ExtResource("6_2his3")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 3.25)
+shape = SubResource("RectangleShape2D_ojj0m")
+
+[connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
+[connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]
+[connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]
+[connection signal="direction_changed" from="FromDirectionController" to="." method="_on_from_direction_controller_direction_changed"]

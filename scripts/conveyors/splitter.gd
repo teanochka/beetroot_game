@@ -1,0 +1,46 @@
+extends Node2D
+
+var to_directions: Array[Enums.Direction] = []
+var from_direction: Enums.Direction = Enums.Direction.Right
+@export var is_protected: bool = false
+var building_data: BuildingData = preload("res://resources/buildings/splitter.tres")
+@export var directions : Array[Enums.Direction] = []
+@onready var sprite = $SplitterSpriteController
+
+func determine_from_direction():
+	for direction in Enums.Direction.values():
+		if not to_directions.has(direction):
+			from_direction = direction
+
+func set_direction():
+	sprite.set_sprite_frame(from_direction)
+
+func _ready():
+	BuildingCoordinator.add_building(global_position, self)
+	$DirectionController.set_directions(directions)
+
+func update_to_direction(new_directions: Array[Enums.Direction]):
+	to_directions = new_directions
+	determine_from_direction()
+	set_direction()
+	$ConveyorDetectors.set_directions(new_directions)
+
+
+func _on_conveyor_detectors_inventory_found(inventory: ConveyorInventory):
+	var item = $ConveyorInventory.offload_item()
+	if item:
+		inventory.receive_item(item)
+
+func _on_conveyor_inventory_item_held():
+	$ConveyorDetectors.start_checking()
+
+func _on_from_direction_controller_direction_changed():
+	determine_from_direction()
+	set_direction()
+
+func _on_direction_controller_directions_changed(new_directions: Array[Enums.Direction]):
+	update_to_direction(new_directions)
+
+
+func _on_inventory_found() -> void:
+	pass # Replace with function body.

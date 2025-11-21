@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dskhw70rvg7p4"]
+
+[ext_resource type="Script" uid="uid://q4phvr7tph6x" path="res://scripts/buildings/deconstructor.gd" id="1_wt58r"]
+
+[node name="Deconstructor" type="Node2D"]
+script = ExtResource("1_wt58r")

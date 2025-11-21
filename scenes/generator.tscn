@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://bebyktnp23ysv"]
+
+[ext_resource type="Script" uid="uid://cy50r60bcobiw" path="res://scripts/generator.gd" id="1_kgmdj"]
+[ext_resource type="PackedScene" uid="uid://eent0fo8gcwr" path="res://scenes/conveyors/conveyor_detectors.tscn" id="2_ionxw"]
+[ext_resource type="Resource" uid="uid://b864xdth1kldr" path="res://resources/items/beetroot.tres" id="2_ychy0"]
+[ext_resource type="PackedScene" uid="uid://11576jk4hasr" path="res://scenes/conveyors/conveyor_inventory.tscn" id="4_g6cet"]
+[ext_resource type="Texture2D" uid="uid://bjicv64hxdewf" path="res://assets/importer.png" id="4_ionxw"]
+[ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="5_fyay7"]
+[ext_resource type="PackedScene" uid="uid://duj0a22bmdyba" path="res://scenes/conveyors/from_direction_controller.tscn" id="6_c80ml"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sebn1"]
+size = Vector2(9, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgmdj"]
+size = Vector2(17, 16.5)
+
+[node name="Generator" type="Node2D"]
+script = ExtResource("1_kgmdj")
+generated_item_data = ExtResource("2_ychy0")
+
+[node name="ConveyorDetectors" parent="." instance=ExtResource("2_ionxw")]
+
+[node name="ConveyorInventory" parent="." instance=ExtResource("4_g6cet")]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorInventory"]
+shape = SubResource("RectangleShape2D_sebn1")
+
+[node name="DirectionController" parent="." instance=ExtResource("5_fyay7")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionController"]
+shape = SubResource("RectangleShape2D_sebn1")
+
+[node name="FromDirectionController" parent="." instance=ExtResource("6_c80ml")]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("4_ionxw")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_kgmdj")
+
+[connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
+[connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

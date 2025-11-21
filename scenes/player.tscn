@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://ot8tq08okngb"]
+[gd_scene load_steps=11 format=3 uid="uid://ot8tq08okngb"]
 
 [ext_resource type="Script" uid="uid://wmg732tdqo10" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://ci0k3fo3elm2p" path="res://assets/charachter.png" id="2_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://briplwdu2yfar" path="res://assets/SFX/walking.mp3" id="3_qhqgy"]
 
 [sub_resource type="Animation" id="Animation_tuyoq"]
 length = 0.001
@@ -137,3 +138,9 @@ limit_top = -120
 limit_right = 167
 limit_bottom = 107
 position_smoothing_enabled = true
+
+[node name="Walking" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_qhqgy")
+volume_db = -8.0
+pitch_scale = 1.2
+parameters/looping = true

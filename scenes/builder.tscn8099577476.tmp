@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://dupkutwhga1jr"]
+
+[ext_resource type="Script" uid="uid://cie2mst4iu6ao" path="res://scripts/buildings/builder.gd" id="1_80mxy"]
+[ext_resource type="PackedScene" uid="uid://4vlkha7i3cj6" path="res://scenes/buildable_conveyor.tscn" id="2_glllh"]
+[ext_resource type="PackedScene" uid="uid://bmheadwtu10fp" path="res://scenes/buildable_splitter.tscn" id="3_rcluh"]
+[ext_resource type="PackedScene" uid="uid://bhkwvo2r2we0s" path="res://scenes/buildable_building.tscn" id="4_dqica"]
+
+[node name="Builder" type="Node2D" groups=["Builder"]]
+script = ExtResource("1_80mxy")
+
+[node name="BuildableConveyor" parent="." instance=ExtResource("2_glllh")]
+
+[node name="BuildableSplitter" parent="." instance=ExtResource("3_rcluh")]
+
+[node name="BuildableBuilding" parent="." instance=ExtResource("4_dqica")]

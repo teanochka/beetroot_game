@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BuildingData" load_steps=4 format=3 uid="uid://w7jtw48pebca"]
+
+[ext_resource type="Resource" uid="uid://djlw11gra3yv1" path="res://resources/items/syrup.tres" id="1_ntjjd"]
+[ext_resource type="Script" uid="uid://cfusxnxp5vyo5" path="res://resources/buildings/BuildingData.gd" id="2_sivl7"]
+[ext_resource type="Texture2D" uid="uid://47iva6ewfrgw" path="res://assets/evaporator.png" id="3_x27sh"]
+
+[resource]
+script = ExtResource("2_sivl7")
+building_name = "Выпаривающий аппарат"
+sprite = ExtResource("3_x27sh")
+processing_time = 4
+input_resource_type = "juice"
+output_item_data = ExtResource("1_ntjjd")
+description = "Выпаривает воду из сиропа"
+build_price = 200
+sprite_offset = -6.5
+metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://b4bct0jceosh5"]
+
+[ext_resource type="Script" uid="uid://dx7aunqk8nx50" path="res://scripts/conveyors/splitter.gd" id="1_hmw46"]
+[ext_resource type="PackedScene" uid="uid://eent0fo8gcwr" path="res://scenes/conveyors/conveyor_detectors.tscn" id="1_lqxx8"]
+[ext_resource type="PackedScene" uid="uid://11576jk4hasr" path="res://scenes/conveyors/conveyor_inventory.tscn" id="3_7ukg3"]
+[ext_resource type="PackedScene" uid="uid://uutkrtphv1xr" path="res://scenes/conveyors/splitter_sprite_controller.tscn" id="3_hmw46"]
+[ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="4_m5gss"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ukg3"]
+size = Vector2(9, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5gss"]
+size = Vector2(17, 16.5)
+
+[node name="Splitter" type="Node2D"]
+script = ExtResource("1_hmw46")
+
+[node name="ConveyorDetectors" parent="." instance=ExtResource("1_lqxx8")]
+
+[node name="SplitterSpriteController" parent="." instance=ExtResource("3_hmw46")]
+
+[node name="ConveyorInventory" parent="." instance=ExtResource("3_7ukg3")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorInventory"]
+shape = SubResource("RectangleShape2D_7ukg3")
+
+[node name="DirectionController" parent="." instance=ExtResource("4_m5gss")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionController"]
+shape = SubResource("RectangleShape2D_7ukg3")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 3.25)
+shape = SubResource("RectangleShape2D_m5gss")
+
+[connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
+[connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]
+[connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]

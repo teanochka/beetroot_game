@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://uutkrtphv1xr"]
+
+[ext_resource type="Texture2D" uid="uid://grketaugo3tx" path="res://assets/splitter_sheet.png" id="1_1yk5f"]
+[ext_resource type="Script" uid="uid://cgwrngr70f3vd" path="res://scripts/conveyors/splitter_sprite_controller.gd" id="2_5ib6i"]
+
+[node name="SplitterSpriteController" type="Sprite2D"]
+texture_filter = 3
+texture = ExtResource("1_1yk5f")
+hframes = 2
+vframes = 2
+script = ExtResource("2_5ib6i")

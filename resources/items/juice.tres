@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://d1afvwbckp5jq"]
+
+[ext_resource type="Script" uid="uid://eqcbq42r8x3b" path="res://resources/items/ItemData.gd" id="1_7u8oh"]
+[ext_resource type="Texture2D" uid="uid://bp7bgil8iarsb" path="res://assets/juice.png" id="2_mimlb"]
+
+[resource]
+script = ExtResource("1_7u8oh")
+display_name = "свекольный сок"
+texture = ExtResource("2_mimlb")
+value = 15
+item_type = "juice"
+metadata/_custom_type_script = "uid://eqcbq42r8x3b"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://b75qcklmslksk"]
+
+[ext_resource type="Script" uid="uid://eqcbq42r8x3b" path="res://resources/items/ItemData.gd" id="1_cg6ye"]
+[ext_resource type="Texture2D" uid="uid://c5d0vwt421w7l" path="res://assets/chips.png" id="2_nesex"]
+
+[resource]
+script = ExtResource("1_cg6ye")
+display_name = "измельченная свекла"
+texture = ExtResource("2_nesex")
+value = 10
+item_type = "chips"
+metadata/_custom_type_script = "uid://eqcbq42r8x3b"

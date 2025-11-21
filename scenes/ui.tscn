@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://blnvwoutudek0"]
 
-[ext_resource type="Script" uid="uid://bilttgupth3wm" path="res://scripts/UIManager.gd" id="1_x4jx1"]
+[ext_resource type="Script" uid="uid://bilttgupth3wm" path="res://scripts/UI/UIManager.gd" id="1_x4jx1"]
 [ext_resource type="PackedScene" uid="uid://btilb0ar6fpjr" path="res://scenes/building_list_item.tscn" id="2_x4jx1"]
 [ext_resource type="Script" uid="uid://b4coctrfgra38" path="res://scripts/UI/money_label.gd" id="3_yev5y"]
 
@@ -52,6 +52,6 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 30
 text = "Вы в режиме сноса. Нажмите esc, чтобы выйти."
 horizontal_alignment = 1

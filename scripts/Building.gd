@@ -2,6 +2,7 @@ extends Node2D
 class_name Building
 
 @export var building_data: BuildingData
+@export var is_protected: bool = false
 var to_direction: Enums.Direction = Enums.Direction.Right
 var from_direction: Enums.Direction = Enums.Direction.Left
 @export var directions : Array[Enums.Direction] = []

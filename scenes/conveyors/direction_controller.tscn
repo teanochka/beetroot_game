@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://lnerfb6s67on"]
+
+[ext_resource type="Script" uid="uid://dwwq7fek4h0c6" path="res://scripts/conveyors/direction_controller.gd" id="1_mow5s"]
+
+[node name="DirectionController" type="Area2D"]
+script = ExtResource("1_mow5s")

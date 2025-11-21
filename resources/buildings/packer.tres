@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BuildingData" load_steps=4 format=3 uid="uid://drihw4p1up3t4"]
+
+[ext_resource type="Script" uid="uid://cfusxnxp5vyo5" path="res://resources/buildings/BuildingData.gd" id="1_a4yfj"]
+[ext_resource type="Resource" uid="uid://dtutkhlcktkbq" path="res://resources/items/packed_sugar.tres" id="1_hpdkp"]
+[ext_resource type="Texture2D" uid="uid://bi04lvd6qwm5n" path="res://assets/packer.png" id="3_2jun6"]
+
+[resource]
+script = ExtResource("1_a4yfj")
+building_name = "Упаковщик"
+sprite = ExtResource("3_2jun6")
+processing_time = 7
+input_resource_type = "wet_sugar"
+output_item_data = ExtResource("1_hpdkp")
+description = "Фасует готовый сахар"
+build_price = 2000
+metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

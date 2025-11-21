@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1uovhafhbgd6"]
+
+[ext_resource type="Script" uid="uid://bqq7t0wn5gss0" path="res://scripts/AudioController.gd" id="1_5dt40"]
+[ext_resource type="AudioStream" uid="uid://ci53wess04sdl" path="res://assets/SFX/error.mp3" id="2_cedxo"]
+[ext_resource type="AudioStream" uid="uid://b8w4fbmxlktye" path="res://assets/SFX/placed.mp3" id="3_6fhfa"]
+[ext_resource type="AudioStream" uid="uid://b3vqak7bm70l4" path="res://assets/SFX/bought.mp3" id="4_vj1x0"]
+
+[node name="AudioController" type="Node"]
+script = ExtResource("1_5dt40")
+
+[node name="Error" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_cedxo")
+volume_db = -8.0
+
+[node name="Placed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6fhfa")
+
+[node name="Bought" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_vj1x0")
+volume_db = -8.0

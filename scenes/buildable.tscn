@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://exlcqmpfnrsv"]
+
+[ext_resource type="Texture2D" uid="uid://cc1u2gyx0d17m" path="res://assets/block.png" id="2_fath1"]
+[ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="3_trvci"]
+[ext_resource type="PackedScene" uid="uid://duj0a22bmdyba" path="res://scenes/conveyors/from_direction_controller.tscn" id="4_5j18r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g11l7"]
+size = Vector2(9, 9)
+
+[node name="Buildable" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture_filter = 1
+texture = ExtResource("2_fath1")
+
+[node name="DirectionController" parent="." instance=ExtResource("3_trvci")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionController"]
+shape = SubResource("RectangleShape2D_g11l7")
+
+[node name="FromDirectionController" parent="." instance=ExtResource("4_5j18r")]
+
+[connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]

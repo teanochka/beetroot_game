@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" load_steps=3 format=3 uid="uid://bw6ge1pwgwryi"]
+
+[ext_resource type="Script" uid="uid://cfusxnxp5vyo5" path="res://resources/buildings/BuildingData.gd" id="1_72am8"]
+[ext_resource type="Texture2D" uid="uid://b2ohyx3e7uk7c" path="res://assets/conveyorR.png" id="2_2aad3"]
+
+[resource]
+script = ExtResource("1_72am8")
+building_name = "Конвейер"
+sprite = ExtResource("2_2aad3")
+description = "Основа производства"
+build_price = 1
+building_type = "conveyor"
+metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

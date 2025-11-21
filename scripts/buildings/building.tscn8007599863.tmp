@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://capshjnhlhcvd"]
+
+[ext_resource type="Script" uid="uid://2wy5a32ynpw3" path="res://scripts/Building.gd" id="1_aljxk"]
+[ext_resource type="Texture2D" uid="uid://cc1u2gyx0d17m" path="res://assets/block.png" id="2_h3omk"]
+[ext_resource type="PackedScene" uid="uid://eent0fo8gcwr" path="res://scenes/conveyors/conveyor_detectors.tscn" id="3_ftwwe"]
+[ext_resource type="PackedScene" uid="uid://11576jk4hasr" path="res://scenes/conveyors/conveyor_inventory.tscn" id="4_aljxk"]
+[ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="5_o3r20"]
+[ext_resource type="PackedScene" uid="uid://duj0a22bmdyba" path="res://scenes/conveyors/from_direction_controller.tscn" id="6_b8g3g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd2d"]
+size = Vector2(9, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7huw0"]
+size = Vector2(17, 16.5)
+
+[node name="Building" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_aljxk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture_filter = 1
+texture = ExtResource("2_h3omk")
+
+[node name="ConveyorDetectors" parent="." instance=ExtResource("3_ftwwe")]
+
+[node name="ConveyorInventory" parent="." instance=ExtResource("4_aljxk")]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorInventory"]
+shape = SubResource("RectangleShape2D_iwd2d")
+
+[node name="DirectionController" parent="." instance=ExtResource("5_o3r20")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionController"]
+shape = SubResource("RectangleShape2D_iwd2d")
+
+[node name="FromDirectionController" parent="." instance=ExtResource("6_b8g3g")]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 4.25)
+shape = SubResource("RectangleShape2D_7huw0")
+
+[connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
+[connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]
+[connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]
+[connection signal="direction_changed" from="FromDirectionController" to="." method="_on_from_direction_controller_direction_changed"]

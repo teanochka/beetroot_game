@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn5v6ldr62a4c"]
+
+[ext_resource type="Script" uid="uid://bhejqbkrc1acs" path="res://scripts/conveyors/conveyor_detector.gd" id="1_3l86o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvdkg"]
+size = Vector2(9, 9)
+
+[node name="ConveyorDetector" type="Area2D"]
+script = ExtResource("1_3l86o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gvdkg")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

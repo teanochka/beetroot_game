@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://capshjnhlhcvd"]
 
 [ext_resource type="Texture2D" uid="uid://cc1u2gyx0d17m" path="res://assets/block.png" id="1_n8bkc"]
-[ext_resource type="Script" uid="uid://2wy5a32ynpw3" path="res://scripts/Building.gd" id="1_uvy8r"]
+[ext_resource type="Script" uid="uid://2wy5a32ynpw3" path="res://scripts/building.gd" id="1_uvy8r"]
 [ext_resource type="PackedScene" uid="uid://eent0fo8gcwr" path="res://scenes/conveyors/conveyor_detectors.tscn" id="3_f5uvq"]
 [ext_resource type="PackedScene" uid="uid://11576jk4hasr" path="res://scenes/conveyors/conveyor_inventory.tscn" id="4_gof7m"]
 [ext_resource type="PackedScene" uid="uid://lnerfb6s67on" path="res://scenes/conveyors/direction_controller.tscn" id="5_g3pb6"]

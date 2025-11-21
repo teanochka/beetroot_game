@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://byuywbi2e6woa"]
+
+[ext_resource type="Script" uid="uid://eqcbq42r8x3b" path="res://resources/items/ItemData.gd" id="1_k68vc"]
+[ext_resource type="Texture2D" uid="uid://ck360htgq4vf6" path="res://assets/wet_sugar.png" id="2_63a01"]
+
+[resource]
+script = ExtResource("1_k68vc")
+display_name = "влажный сахар"
+texture = ExtResource("2_63a01")
+value = 30
+item_type = "wet_sugar"
+metadata/_custom_type_script = "uid://eqcbq42r8x3b"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" load_steps=3 format=3 uid="uid://fq0hk51iwxlr"]
+
+[ext_resource type="Script" uid="uid://cfusxnxp5vyo5" path="res://resources/buildings/BuildingData.gd" id="1_0e5ow"]
+[ext_resource type="Texture2D" uid="uid://jc8oixlay3vq" path="res://assets/splitterR.png" id="2_vkvm2"]
+
+[resource]
+script = ExtResource("1_0e5ow")
+building_name = "Разделитель"
+sprite = ExtResource("2_vkvm2")
+description = "Разделяет поток предмето"
+build_price = 10
+building_type = "splitter"
+metadata/_custom_type_script = "uid://cfusxnxp5vyo5"
