@@ -92,17 +92,6 @@ func update_buttons_availability():
 func can_afford(build_price) -> bool:
 	return player_money >= build_price
 
-func _input(event: InputEvent):
-	if Input.is_action_just_pressed("build_menu"):
-		EventBus.emit_task_completed("build_menu")
-		_toggle_build_menu()
-	
-	if Input.is_action_just_pressed("hide_menu"):
-		_hide_all_menus()
-	
-	if Input.is_action_just_pressed("destruction"):
-		_toggle_deconstruction_mode()
-
 func _toggle_build_menu():
 	if deconstruction_mode:
 		exit_deconstruction_mode()

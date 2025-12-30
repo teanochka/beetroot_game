@@ -2,6 +2,7 @@ extends Node
 
 var isBuilding: bool = false
 var isDeconstructing: bool = false
+var is_ui_visible: bool = false
 
 signal tutorial_task_completed(task_type: String)
 
