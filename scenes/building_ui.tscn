@@ -1,24 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://6eoom28ynb61"]
+[gd_scene load_steps=6 format=3 uid="uid://6eoom28ynb61"]
 
 [ext_resource type="Texture2D" uid="uid://d1fls88gscr7o" path="res://assets/arrowU.png" id="1_0u34w"]
 [ext_resource type="Script" uid="uid://bi626kh1t0444" path="res://scripts/BuildingUI.gd" id="1_6xcvk"]
 [ext_resource type="Texture2D" uid="uid://c8acarya2pgpl" path="res://assets/arrowD.png" id="2_6xcvk"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_masot"]
-bg_color = Color(0.041600004, 0.18356001, 0.26, 0.6509804)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="Theme" id="Theme_75hpm"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m3dje"]
-bg_color = Color(0.20249999, 0.437625, 0.45, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[ext_resource type="Theme" uid="uid://ud3170ur0um7" path="res://themes/kenneyUI-blue.tres" id="2_75hpm"]
+[ext_resource type="Theme" uid="uid://h1f7iqhh7ycb" path="res://themes/kenneyUI-yellow.tres" id="3_m3dje"]
 
 [node name="BuildingUI" type="CanvasLayer"]
 script = ExtResource("1_6xcvk")
@@ -29,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_75hpm")
 theme_override_constants/margin_left = 600
 theme_override_constants/margin_top = 300
 theme_override_constants/margin_right = 600
@@ -37,7 +24,6 @@ theme_override_constants/margin_bottom = 400
 [node name="Panel" type="Panel" parent="MarginContainer"]
 custom_minimum_size = Vector2(700, 300)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_masot")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
 layout_mode = 1
@@ -83,9 +69,8 @@ theme_override_constants/separation = 10
 [node name="UpButton" type="Button" parent="MarginContainer/Panel/MarginContainer/Variable/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme = SubResource("Theme_75hpm")
+theme = ExtResource("3_m3dje")
 theme_override_colors/icon_normal_color = Color(0.26, 0.276, 0.5, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_m3dje")
 icon = ExtResource("1_0u34w")
 icon_alignment = 1
 expand_icon = true
@@ -93,9 +78,7 @@ expand_icon = true
 [node name="DownButton" type="Button" parent="MarginContainer/Panel/MarginContainer/Variable/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme = SubResource("Theme_75hpm")
-theme_override_colors/icon_normal_color = Color(0.26, 0.276, 0.5, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_m3dje")
+theme = ExtResource("3_m3dje")
 icon = ExtResource("2_6xcvk")
 icon_alignment = 1
 expand_icon = true
@@ -122,7 +105,6 @@ custom_minimum_size = Vector2(100, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.4714244, 0.68652403, 0.7036841, 1)
 theme_override_font_sizes/font_size = 30
 text = "Название  станции"
 autowrap_mode = 2

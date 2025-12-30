@@ -15,4 +15,5 @@ description = "Выпаривает воду из сиропа"
 build_price = 400
 building_type = "evaporator"
 sprite_offset = -6.5
+variable = "Температура кипения"
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

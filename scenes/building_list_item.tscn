@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://btilb0ar6fpjr"]
+[gd_scene load_steps=4 format=3 uid="uid://btilb0ar6fpjr"]
 
 [ext_resource type="Script" uid="uid://4xkdlqyekjo6" path="res://scripts/UI/building_list_item.gd" id="1_rlh5t"]
 [ext_resource type="Texture2D" uid="uid://cc1u2gyx0d17m" path="res://assets/block.png" id="2_whvsx"]
+[ext_resource type="Theme" uid="uid://h1f7iqhh7ycb" path="res://themes/kenneyUI-yellow.tres" id="3_dmjrb"]
 
 [node name="ListItem" type="HBoxContainer"]
 offset_right = 484.0
@@ -41,6 +42,7 @@ autowrap_mode = 2
 [node name="BuyButton" type="Button" parent="ItemInfo"]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("3_dmjrb")
 text = "10G купить"
 
 [connection signal="focus_entered" from="ItemInfo/BuyButton" to="." method="_on_buy_button_focus_entered"]

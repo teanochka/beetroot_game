@@ -18,4 +18,5 @@ building_type = "cleaner"
 sprite_offset = -5.5
 animation = ExtResource("1_o1tv7")
 frames = 16
+variable = "Скорость оборотов"
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

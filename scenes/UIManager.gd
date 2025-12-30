@@ -49,6 +49,7 @@ func _input(event: InputEvent):
 	
 	# Toggle build menu (только если нет другого открытого UI)
 	if Input.is_action_just_pressed("build_menu") and !is_any_ui_visible:
+		EventBus.emit_task_completed("build_menu")
 		toggle_build_menu()
 		return
 	
@@ -69,13 +70,13 @@ func open_conveyor_ui(position: Vector2, building_data):
 	current_ui = conveyor_ui
 	is_any_ui_visible = true
 
-func open_building_ui(building_type: String):
+func open_building_ui(building: Building):
 	"""Открыть UI конкретного здания (закрывает все остальные UI)"""
 	# Закрыть все UI перед открытием нового
 	close_all_ui()
 	
 	if building_ui.has_method("open_building_ui"):
-		building_ui.open_building_ui(building_type)
+		building_ui.open_building_ui(building)
 		building_ui.visible = true
 		current_ui = building_ui
 		is_any_ui_visible = true
@@ -170,7 +171,7 @@ func handle_building_click(grid_pos: Vector2):
 		if building_type == "conveyor":
 			open_conveyor_ui(grid_pos, building)
 		elif building_type != "splitter":  # Для сплиттера не показываем UI
-			open_building_ui(building_type)
+			open_building_ui(building)
 
 # Сигналы от build_ui
 func _on_building_selected(building_data: BuildingData):

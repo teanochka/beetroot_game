@@ -12,7 +12,8 @@ var from_direction: Enums.Direction = Enums.Direction.Left
 @onready var progress_bar: Node2D = $ProgressBar
 var is_processing: bool = false 
 var clickable: bool = true
-
+var success_chance: float = 1.0
+var variable_value: float = 1.0
 # Добавляем переменные для анимации
 var is_animated: bool = false
 var frame_count: int = 16
@@ -171,3 +172,29 @@ func _on_animation_timer_timeout():
 func _exit_tree():
 	if animation_timer and animation_timer.is_inside_tree():
 		animation_timer.queue_free()
+		
+		
+func update_parameters(new_variable_value: int, new_processing_time: float, new_success_chance: float):
+	variable_value = new_variable_value
+	success_chance = new_success_chance
+	
+	# Обновляем таймер
+	if timer:
+		timer.wait_time = new_processing_time
+	
+	print("Building parameters updated:")
+	print("  Variable value: ", variable_value)
+	print("  Success chance: ", success_chance)
+	print("  Processing time: ", new_processing_time)
+
+func get_ui_data() -> Dictionary:
+	return {
+		"key": building_data.building_type,
+		"name": building_data.building_name,
+		"variable": building_data.variable,
+		"variable_value": variable_value,
+		"process_time": timer.wait_time if timer else building_data.processing_time,
+		"success_chance": success_chance,
+		"input_type": building_data.input_resource_type,
+		"output_type": building_data.output_item_data.item_type if building_data.output_item_data else ""
+	}

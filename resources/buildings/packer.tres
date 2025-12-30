@@ -15,4 +15,5 @@ description = "Фасует готовый сахар"
 build_price = 2000
 building_type = "packer"
 sprite_offset = -3.5
+variable = "Скорость упаковки"
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

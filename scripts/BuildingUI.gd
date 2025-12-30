@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var up_button = $MarginContainer/Panel/MarginContainer/Variable/HBoxContainer/VBoxContainer/UpButton
 @onready var down_button = $MarginContainer/Panel/MarginContainer/Variable/HBoxContainer/VBoxContainer/DownButton
 
+var current_building_ref: Building
 # --- Данные о зданиях ---
 var building_data = [
 	{
@@ -73,63 +74,74 @@ func _ready():
 	up_button.pressed.connect(_on_up_pressed)
 	down_button.pressed.connect(_on_down_pressed)
 
-
-func open_building_ui(building_key: String):
-	current_index = -1
-	for i in range(building_data.size()):
-		if building_data[i]["key"] == building_key:
-			current_index = i
-			current_data = building_data[i]
-			break
+func open_building_ui(building: Building):
+	current_building_ref = building
 	
-	if current_index == -1:
-		print("⚠️ Не найдены данные для:", building_key)
+	if not current_building_ref or not current_building_ref.building_data:
+		print("No building or building data found!")
 		return
 	
-	current_building.text = current_data["name"]
-	variable_name.text = current_data["variable"]
-	variable_value = current_data["variable_value"]
-	_update_ui()
+	var building_data = current_building_ref.get_ui_data()
+	
+	current_building.text = building_data["name"]
+	variable_name.text = building_data["variable"]
+	variable.text = str(building_data["variable_value"])
+	production_speed.text = "Время: " + str(round(building_data["process_time"])) + " сек"
+	success_chance.text = "Шанс успеха: " + str(round(building_data["success_chance"] * 100)) + "%"
+	
 	show()
-
+	print("Opened UI for: ", building_data["name"])
 
 func _on_up_pressed():
-	if current_index == -1:
+	if not current_building_ref:
 		return
 	
-	variable_value += 1
+	# Получаем текущие значения
+	var current_data = current_building_ref.get_ui_data()
+	var new_variable_value = current_data["variable_value"] + 1
+	var new_process_time = max(0.5, current_data["process_time"] * 0.95)
+	var new_success_chance = max(0.1, current_data["success_chance"] - 0.1)
 	
-	current_data["variable_value"] = variable_value
-	current_data["process_time"] = max(0.5, current_data["process_time"] * 0.95)
-	current_data["success_chance"] = max(0.1, current_data["success_chance"] - 0.1)
+	# Обновляем реальную постройку
+	current_building_ref.update_parameters(new_variable_value, new_process_time, new_success_chance)
 	
-	# Сохраняем изменения обратно в массив
-	building_data[current_index] = current_data
+	# Обновляем UI с новыми значениями
 	_update_ui()
 
-
-# --- НАЖАТИЕ НА КНОПКУ УМЕНЬШЕНИЯ ---
 func _on_down_pressed():
-	if current_index == -1 or variable_value <= 0:
+	if not current_building_ref:
 		return
 	
-	variable_value -= 1
+	# Получаем текущие значения
+	var current_data = current_building_ref.get_ui_data()
+	var current_variable_value = current_data["variable_value"]
 	
-	current_data["variable_value"] = variable_value
-	current_data["process_time"] *= 1.05
-	current_data["success_chance"] = min(1.0, current_data["success_chance"] + 0.1)
+	if current_variable_value <= 0:
+		return
 	
-	# Сохраняем изменения обратно в массив
-	building_data[current_index] = current_data
+	var new_variable_value = current_variable_value - 1
+	var new_process_time = current_data["process_time"] * 1.05
+	var new_success_chance = min(1.0, current_data["success_chance"] + 0.1)
+	
+	# Обновляем реальную постройку
+	current_building_ref.update_parameters(new_variable_value, new_process_time, new_success_chance)
+	
+	# Обновляем UI с новыми значениями
 	_update_ui()
 
-
-# --- ОБНОВЛЕНИЕ ТЕКСТОВ ---
 func _update_ui():
-	variable.text = str(variable_value)
+	if not current_building_ref:
+		return
+	
+	var current_data = current_building_ref.get_ui_data()
+	variable.text = str(current_data["variable_value"])
 	production_speed.text = "Время: " + str(round(current_data["process_time"])) + " сек"
 	success_chance.text = "Шанс успеха: " + str(round(current_data["success_chance"] * 100)) + "%"
-
+	
+	print("UI updated - New values:")
+	print("  Variable: ", current_data["variable_value"])
+	print("  Process time: ", current_data["process_time"])
+	print("  Success chance: ", current_data["success_chance"])
 
 func _input(event):
 	if event.is_action_pressed("hide_menu"):

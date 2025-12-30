@@ -15,4 +15,5 @@ description = "Создает сахарные кристаллы"
 build_price = 1000
 building_type = "crystallizer"
 sprite_offset = -13.5
+variable = "Интенсивность охлаждения"
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

@@ -9,7 +9,7 @@ var rotting_stage: int = 0
 var rotting_timer: Timer
 var rotting_texture: Texture2D
 var original_texture: Texture2D
-const ROTTING_TIME: float = 20.0
+const ROTTING_TIME: float = 120.0
 const MAX_ROTTING_STAGE: int = 3
 
 func _ready():

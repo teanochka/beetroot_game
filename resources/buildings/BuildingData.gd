@@ -17,3 +17,5 @@ class_name BuildingData extends Resource
 
 @export var animation: Texture2D
 @export var frames: int = 0
+
+@export var variable: String = "Скорость"
