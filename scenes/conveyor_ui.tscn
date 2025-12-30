@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=3 uid="uid://eagcyjc724dh"]
+
+[ext_resource type="Script" uid="uid://c4ek2bxev762y" path="res://scripts/UI/conveyor_ui.gd" id="1_cv30w"]
+[ext_resource type="Texture2D" uid="uid://3a0bspj26era" path="res://assets/whitelist.png" id="1_o4s3g"]
+[ext_resource type="Texture2D" uid="uid://dagbhbpc8i63s" path="res://assets/whitelist_pressed.png" id="2_cv30w"]
+[ext_resource type="Texture2D" uid="uid://trrar1r2btax" path="res://assets/blacklist.png" id="3_cvf0r"]
+[ext_resource type="Texture2D" uid="uid://bey7dcw60y1g6" path="res://assets/blacklist_pressed.png" id="4_4530m"]
+[ext_resource type="PackedScene" uid="uid://c16p2lbiwtjho" path="res://scenes/item_ui.tscn" id="5_px17p"]
+
+[node name="ConveyorUI" type="CanvasLayer"]
+script = ExtResource("1_cv30w")
+
+[node name="Panel" type="Panel" parent="."]
+texture_filter = 3
+custom_minimum_size = Vector2(400, 200)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Mode" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.8
+text = "Белый список"
+
+[node name="Whitelist" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+toggle_mode = true
+texture_normal = ExtResource("1_o4s3g")
+texture_pressed = ExtResource("2_cv30w")
+
+[node name="Blacklist" type="TextureButton" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+toggle_mode = true
+texture_normal = ExtResource("3_cvf0r")
+texture_pressed = ExtResource("4_4530m")
+
+[node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.0
+columns = 5
+
+[node name="Panel" parent="Panel/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("5_px17p")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Меню настройки фильтров конвейера. Нажми ПКМ, чтобы закрыть."
+
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/Whitelist" to="." method="_on_whitelist_toggled"]
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/Blacklist" to="." method="_on_blacklist_toggled"]

@@ -22,3 +22,16 @@ func remove_building(location: Vector2) -> BuildingData:
 
 func get_building_at(location: Vector2) -> Node2D:
 	return buildings.get(location)
+
+func update_conveyor_filters(location: Vector2, whitelist: Array[String], blacklist: Array[String], mode: String) -> bool:
+	var conveyor = get_building_at(location)
+	if conveyor:
+		conveyor.whitelist = whitelist.duplicate()
+		conveyor.blacklist = blacklist.duplicate()
+		conveyor.mode = mode
+		conveyor.update_filter_display()
+		print("Updated filters for conveyor at ", location)
+		print("Whitelist: ", whitelist)
+		print("Blacklist: ", blacklist)
+		return true
+	return false

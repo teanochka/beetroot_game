@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eedns17nsy75"
-path="res://.godot/imported/diffuser.png-76ba09771b5e1879737358781624c0bc.ctex"
+uid="uid://b5wf1i772n18o"
+path="res://.godot/imported/cleaner_animaton.png-a3adfcfe1061aa91f1d77dfff14b2c7a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/diffuser.png"
-dest_files=["res://.godot/imported/diffuser.png-76ba09771b5e1879737358781624c0bc.ctex"]
+source_file="res://assets/cleaner_animaton.png"
+dest_files=["res://.godot/imported/cleaner_animaton.png-a3adfcfe1061aa91f1d77dfff14b2c7a.ctex"]
 
 [params]
 

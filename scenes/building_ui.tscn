@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://6eoom28ynb61"]
+[gd_scene load_steps=7 format=3 uid="uid://6eoom28ynb61"]
 
 [ext_resource type="Texture2D" uid="uid://d1fls88gscr7o" path="res://assets/arrowU.png" id="1_0u34w"]
+[ext_resource type="Script" uid="uid://bi626kh1t0444" path="res://scripts/BuildingUI.gd" id="1_6xcvk"]
 [ext_resource type="Texture2D" uid="uid://c8acarya2pgpl" path="res://assets/arrowD.png" id="2_6xcvk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_masot"]
@@ -20,6 +21,7 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
 [node name="BuildingUI" type="CanvasLayer"]
+script = ExtResource("1_6xcvk")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15

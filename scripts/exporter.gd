@@ -7,7 +7,7 @@ var to_direction: Enums.Direction = Enums.Direction.Up
 var from_direction: Enums.Direction = Enums.Direction.Left
 @export var directions: Array[Enums.Direction] = []
 @onready var conveyor_inventory = $ConveyorInventory
-
+var clickable: bool = false
 func _ready():
 	BuildingCoordinator.add_building(global_position, self)
 	

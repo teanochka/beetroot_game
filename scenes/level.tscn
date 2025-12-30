@@ -1,18 +1,19 @@
-[gd_scene load_steps=18 format=4 uid="uid://xlhfaujtotv5"]
+[gd_scene load_steps=19 format=4 uid="uid://xlhfaujtotv5"]
 
+[ext_resource type="Script" uid="uid://yo5h7bnavnfp" path="res://scripts/level.gd" id="1_ux5qa"]
 [ext_resource type="Texture2D" uid="uid://c3v6tbasvm5xy" path="res://assets/background.png" id="2_8c41q"]
 [ext_resource type="Texture2D" uid="uid://d22iojpjrcc6l" path="res://assets/ground_tiles.png" id="2_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://ot8tq08okngb" path="res://scenes/player.tscn" id="2_w8frs"]
 [ext_resource type="PackedScene" uid="uid://dupkutwhga1jr" path="res://scenes/builder.tscn" id="4_arp2o"]
 [ext_resource type="PackedScene" uid="uid://blnvwoutudek0" path="res://scenes/ui.tscn" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://6eoom28ynb61" path="res://scenes/building_ui.tscn" id="7_8c41q"]
-[ext_resource type="Script" uid="uid://bi626kh1t0444" path="res://scripts/BuildingUI.gd" id="8_olg7q"]
 [ext_resource type="AudioStream" uid="uid://dgkynexaebk7p" path="res://assets/SFX/ambient.mp3" id="9_wc255"]
 [ext_resource type="PackedScene" uid="uid://p4aybl0isc0l" path="res://scenes/tutorial.tscn" id="11_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://b3panky5js3y5" path="res://scenes/conveyors/belt.tscn" id="13_64w2a"]
 [ext_resource type="PackedScene" uid="uid://bebyktnp23ysv" path="res://scenes/generator.tscn" id="14_fpun6"]
 [ext_resource type="PackedScene" uid="uid://6evlux51r022" path="res://scenes/ghost_controller.tscn" id="15_wc255"]
 [ext_resource type="PackedScene" uid="uid://dskhw70rvg7p4" path="res://scenes/deconstructor.tscn" id="16_arp2o"]
+[ext_resource type="PackedScene" uid="uid://eagcyjc724dh" path="res://scenes/conveyor_ui.tscn" id="16_ux5qa"]
 [ext_resource type="PackedScene" uid="uid://d1uovhafhbgd6" path="res://scenes/audio_controller.tscn" id="17_ux5qa"]
 [ext_resource type="PackedScene" uid="uid://ypense6xgocw" path="res://scenes/exporter.tscn" id="18_82cfe"]
 
@@ -32,6 +33,7 @@ sources/0 = SubResource("TileSetAtlasSource_b121j")
 [node name="Level" type="Node2D" groups=["GameManager"]]
 y_sort_enabled = true
 texture_filter = 1
+script = ExtResource("1_ux5qa")
 
 [node name="Background" type="Parallax2D" parent="."]
 z_index = -71
@@ -61,7 +63,6 @@ tile_set = SubResource("TileSet_8c41q")
 [node name="Buildings" type="Node2D" parent="."]
 
 [node name="BuildingUI" parent="." instance=ExtResource("7_8c41q")]
-script = ExtResource("8_olg7q")
 
 [node name="Tutorial" parent="." groups=["Tutorial"] instance=ExtResource("11_t1rx8")]
 
@@ -93,9 +94,10 @@ z_index = 20
 
 [node name="GhostController" parent="." instance=ExtResource("15_wc255")]
 
+[node name="ConveyorUI" parent="." instance=ExtResource("16_ux5qa")]
+
 [connection signal="building_selected" from="UI" to="Builder" method="_on_ui_building_selected"]
 [connection signal="deconstruction_finished" from="UI" to="Deconstructor" method="_on_ui_deconstruction_finished"]
 [connection signal="deconstruction_started" from="UI" to="Deconstructor" method="_on_ui_deconstruction_started"]
-[connection signal="visibility_changed" from="UI" to="." method="_on_ui_visibility_changed"]
 [connection signal="item_sold" from="Exporter" to="UI" method="_on_exporter_item_sold"]
 [connection signal="building_demolished" from="Deconstructor" to="UI" method="_on_deconstructor_building_demolished"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eedns17nsy75"
-path="res://.godot/imported/diffuser.png-76ba09771b5e1879737358781624c0bc.ctex"
+uid="uid://c83ewj2u1sigs"
+path="res://.godot/imported/rot.png-ac75ac573fcad74bd6decc29501d2874.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/diffuser.png"
-dest_files=["res://.godot/imported/diffuser.png-76ba09771b5e1879737358781624c0bc.ctex"]
+source_file="res://assets/rot.png"
+dest_files=["res://.godot/imported/rot.png-ac75ac573fcad74bd6decc29501d2874.ctex"]
 
 [params]
 

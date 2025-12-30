@@ -6,10 +6,17 @@ extends CanvasLayer
 @onready var buildings_list: VBoxContainer = $BuildingMenu/MarginContainer/ScrollContainer/BuildingsList
 
 var list_item_scene = preload("res://scenes/building_list_item.tscn")
-var building_data_dir = "res://resources/buildings/"
+var building_paths = [
+	"res://resources/buildings/cleaner.tres",
+	"res://resources/buildings/conveyor.tres",
+	"res://resources/buildings/crystallizer.tres",
+	"res://resources/buildings/diffuser.tres",
+	"res://resources/buildings/evaporator.tres",
+	"res://resources/buildings/packer.tres",
+	"res://resources/buildings/splitter.tres"
+]
 var building_resources: Array[BuildingData] = []
-var player_money: int = 4000
-var is_visible: bool = false
+var player_money: int = 10000
 var can_build: bool = true
 var deconstruction_mode: bool = false
 
@@ -32,20 +39,16 @@ func clear_buildings_list():
 		child.queue_free()
 		
 func load_building_resources():
-	var dir = DirAccess.open(building_data_dir)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if file_name.ends_with(".tres"):
-				var resource_path = building_data_dir + file_name
-				var building_data = load(resource_path)
-				if building_data is BuildingData:
-					building_resources.append(building_data)
-			file_name = dir.get_next()
-		
-		sort_buildings_by_price()
-		populate_buildings_list()
+	building_resources.clear()
+	
+	for path in building_paths:
+		if ResourceLoader.exists(path):
+			var building_data = load(path)
+			if building_data is BuildingData:
+				building_resources.append(building_data)
+	
+	sort_buildings_by_price()
+	populate_buildings_list()
 
 func sort_buildings_by_price():
 	building_resources.sort_custom(func(a, b): return a.build_price < b.build_price)
@@ -104,8 +107,8 @@ func _toggle_build_menu():
 	if deconstruction_mode:
 		exit_deconstruction_mode()
 	
-	is_visible = !is_visible
-	if is_visible:
+	EventBus.isBuilding = !EventBus.isBuilding
+	if EventBus.isBuilding:
 		building_menu.show()
 	else:
 		building_menu.hide()
@@ -114,7 +117,7 @@ func _hide_all_menus():
 	if deconstruction_mode:
 		exit_deconstruction_mode()
 	
-	is_visible = false
+	EventBus.isBuilding = false
 	building_menu.hide()
 
 func _toggle_deconstruction_mode():
@@ -128,8 +131,8 @@ func enter_deconstruction_mode():
 	deconstruction_label.show()
 	deconstruction_started.emit()
 	
-	if is_visible:
-		is_visible = false
+	if EventBus.isBuilding:
+		EventBus.isBuilding = false
 		building_menu.hide()
 	
 func exit_deconstruction_mode():
@@ -146,11 +149,13 @@ func _on_list_item_prevent_buildind() -> void:
 func _on_deconstructor_building_demolished(refund_amount: Variant) -> void:
 	player_money += refund_amount
 	money_label.update_display(player_money)
+	update_buttons_availability()
 
 
 func _on_exporter_item_sold(item_value: int) -> void:
 	player_money += item_value
 	money_label.update_display(player_money)
+	update_buttons_availability()
 
 
 func _on_building_menu_focus_entered() -> void:

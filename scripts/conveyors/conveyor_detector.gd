@@ -7,10 +7,10 @@ func _ready():
 	collision_mask = 0xFFFFFFFF  # Видеть все
 	collision_layer = 1    
 
-func has_space() -> bool:
+func has_space(item:Node2D) -> bool:
 	if conveyor_inventory == null:
 		return false
-	return conveyor_inventory.can_receive_item()
+	return conveyor_inventory.can_receive_item(item)
 
 func get_inventory() -> ConveyorInventory:
 	return conveyor_inventory

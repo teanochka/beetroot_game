@@ -22,7 +22,7 @@ script = ExtResource("1_xiiba")
 centered = true
 hframes = 5
 
-[node name="ConveyorInventory" parent="." groups=["conveyors"] instance=ExtResource("4_ojj0m")]
+[node name="ConveyorInventory" parent="." instance=ExtResource("4_ojj0m")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorInventory"]
 shape = SubResource("RectangleShape2D_chvdd")
@@ -39,8 +39,6 @@ shape = SubResource("RectangleShape2D_chvdd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(0, 3.25)
 shape = SubResource("RectangleShape2D_ojj0m")
-
-[node name="FilterIcon" type="Sprite2D" parent="."]
 
 [connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
 [connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]

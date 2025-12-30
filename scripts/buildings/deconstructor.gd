@@ -1,10 +1,9 @@
 extends Node2D
-var deconstruction_mode: bool = false
 signal building_demolished(refund_amount: int)
 @onready var audio_controller: Node = $"../AudioController"
 
 func _physics_process(_delta):
-	if not deconstruction_mode:
+	if not EventBus.isDeconstructing:
 		return 	
 	var pos = get_global_mouse_position()
 	var location = Vector2(round(pos.x/Constants.grid_size), round(pos.y/Constants.grid_size)) * Constants.grid_size
@@ -24,8 +23,8 @@ func _physics_process(_delta):
 
 
 func _on_ui_deconstruction_started() -> void:
-	deconstruction_mode = true
+	EventBus.isDeconstructing = true
 
 
 func _on_ui_deconstruction_finished() -> void:
-	deconstruction_mode = false
+	EventBus.isDeconstructing = false

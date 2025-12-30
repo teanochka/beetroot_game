@@ -1,18 +1,21 @@
-[gd_resource type="Resource" script_class="BuildingData" load_steps=4 format=3 uid="uid://bwqbk1ce227aw"]
+[gd_resource type="Resource" script_class="BuildingData" load_steps=5 format=3 uid="uid://bwqbk1ce227aw"]
 
 [ext_resource type="Resource" uid="uid://b75qcklmslksk" path="res://resources/items/chips.tres" id="1_1fyt6"]
-[ext_resource type="Texture2D" uid="uid://b5wf1i772n18o" path="res://assets/cleaner.png" id="2_k674c"]
+[ext_resource type="Texture2D" uid="uid://b5wf1i772n18o" path="res://assets/cleaner_animaton.png" id="1_o1tv7"]
+[ext_resource type="Texture2D" uid="uid://b20ey857c5w0u" path="res://assets/cleaner.png" id="2_k674c"]
 [ext_resource type="Script" uid="uid://cfusxnxp5vyo5" path="res://resources/buildings/BuildingData.gd" id="2_o1tv7"]
 
 [resource]
 script = ExtResource("2_o1tv7")
 building_name = "Очистительная станция"
 sprite = ExtResource("2_k674c")
-processing_time = 5
-input_resource_type = "beetroot"
+processing_time = 2
+input_resource_type = ["beetroot"]
 output_item_data = ExtResource("1_1fyt6")
 description = "Очищает свеклу от примесей"
 build_price = 200
 building_type = "cleaner"
 sprite_offset = -5.5
+animation = ExtResource("1_o1tv7")
+frames = 16
 metadata/_custom_type_script = "uid://cfusxnxp5vyo5"

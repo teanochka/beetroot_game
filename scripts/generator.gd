@@ -6,7 +6,7 @@ var is_protected: bool = true
 @export var directions : Array[Enums.Direction] = []
 
 @export var generated_item_data: ItemData
-
+var clickable: bool = false
 func _ready():
 	BuildingCoordinator.add_building(global_position, self)
 	$DirectionController.set_directions(directions)

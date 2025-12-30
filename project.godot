@@ -27,6 +27,7 @@ EventBus="*res://scripts/EventBus.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/stretch/mode="viewport"
 
 [global_group]
 
@@ -34,6 +35,7 @@ GameManager=""
 Tutorial=""
 ItemsController=""
 Builder=""
+conveyors=""
 
 [input]
 

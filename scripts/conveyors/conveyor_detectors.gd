@@ -35,6 +35,7 @@ func start_checking() -> void:
 	checking = true
 
 func check_availability() -> void:
+	var conveyor_inventory = get_parent().get_node("ConveyorInventory")
 	for c in range(DIR_COUNT):
 		var direction: Enums.Direction = DIRECTION_ORDER[check_direction]
 		if DIR_COUNT > 1:
@@ -44,12 +45,11 @@ func check_availability() -> void:
 		if not detectors.has(direction):
 			continue
 		var detector: ConveyorDetector = detectors[direction]
-		if detector.has_space():
+		if detector.has_space(conveyor_inventory.peek_item()):
 			checking = false
 			var inventory : ConveyorInventory = detector.get_inventory()
 			emit_signal("inventory_found", inventory)
 			break
-
 
 func _on_inventory_found() -> void:
 	pass # Replace with function body.

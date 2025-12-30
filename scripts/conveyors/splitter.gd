@@ -6,7 +6,7 @@ var from_direction: Enums.Direction = Enums.Direction.Right
 var building_data: BuildingData = preload("res://resources/buildings/splitter.tres")
 @export var directions : Array[Enums.Direction] = []
 @onready var sprite = $SplitterSpriteController
-
+var clickable: bool = false
 func determine_from_direction():
 	for direction in Enums.Direction.values():
 		if not to_directions.has(direction):

@@ -74,7 +74,6 @@ func _ready():
 	down_button.pressed.connect(_on_down_pressed)
 
 
-# --- ОТКРЫТИЕ UI ---
 func open_building_ui(building_key: String):
 	current_index = -1
 	for i in range(building_data.size()):
@@ -94,7 +93,6 @@ func open_building_ui(building_key: String):
 	show()
 
 
-# --- НАЖАТИЕ НА КНОПКУ УВЕЛИЧЕНИЯ ---
 func _on_up_pressed():
 	if current_index == -1:
 		return
