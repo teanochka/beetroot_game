@@ -4,7 +4,7 @@ extends Node
 signal ui_state_changed(is_any_ui_visible: bool)
 signal building_selected(building_data: BuildingData)
 signal deconstruction_mode_toggled(is_active: bool)
-signal conveyor_filters_updated(position: Vector2, whitelist: Array, blacklist: Array, mode: int)
+signal conveyor_filters_updated(position: Vector2, whitelist: Array, blacklist: Array, mode: String)
 
 # Ссылки на UI элементы
 @onready var conveyor_ui: CanvasLayer = get_parent().get_node("ConveyorUI")
@@ -42,6 +42,7 @@ func _ready():
 		build_ui.deconstruction_finished.connect(_on_deconstruction_finished)
 
 func _input(event: InputEvent):
+	
 	# ПКМ или ESC закрывает любое UI
 	if Input.is_action_just_pressed("right_click") or Input.is_action_just_pressed("hide_menu"):
 		close_all_ui()
@@ -67,6 +68,8 @@ func open_conveyor_ui(position: Vector2, building_data):
 	conveyor_ui.visible = true
 	if conveyor_ui.has_method("set_lists"):
 		conveyor_ui.set_lists(building_data.whitelist, building_data.blacklist)
+	if conveyor_ui.has_method("set_mode"):
+		conveyor_ui.set_mode(building_data.mode)
 	current_ui = conveyor_ui
 	is_any_ui_visible = true
 
@@ -168,7 +171,7 @@ func handle_building_click(grid_pos: Vector2):
 	if building != null and building.clickable:
 		var building_type = building.building_data.building_type
 		
-		if building_type == "conveyor":
+		if building_type == "conveyor" or building_type == "splitter":
 			open_conveyor_ui(grid_pos, building)
 		elif building_type != "splitter":  # Для сплиттера не показываем UI
 			open_building_ui(building)

@@ -8,7 +8,7 @@ func _ready() -> void:
 
 func _physics_process(_delta):
 	# Обработка кликов по зданиям (только если нет открытого UI)
-	if !ui_manager.is_any_ui_visible and !EventBus.isBuilding and !EventBus.isDeconstructing:
+	if !ui_manager.is_any_ui_visible and !EventBus.is_ui_visible and !EventBus.isBuilding and !EventBus.isDeconstructing:
 		if Input.is_action_just_pressed("left_click"):
 			var pos = get_global_mouse_position()
 			var grid_pos = Vector2(

@@ -13,7 +13,7 @@ func set_completed(completed: bool):
 	if completed:
 		checkbox_texture.texture = checked_texture
 		# Используем add_theme_color_override вместо modulate
-		label.add_theme_color_override("default_color", Color(0.617, 0.617, 0.617, 1.0))
+		label.add_theme_color_override("default_color", Color(0.348, 0.348, 0.348, 1.0))
 	else:
 		checkbox_texture.texture = unchecked_texture
 		label.add_theme_color_override("default_color", Color(1, 1, 1))

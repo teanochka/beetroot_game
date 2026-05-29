@@ -12,3 +12,6 @@ func can_place(location: Vector2):
 
 func place(location: Vector2):
 	pass
+
+func get_placement_direction() -> Enums.Direction:
+	return Enums.Direction.Right

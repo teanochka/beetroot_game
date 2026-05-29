@@ -35,6 +35,8 @@ shape = SubResource("RectangleShape2D_7ukg3")
 position = Vector2(0, 3.25)
 shape = SubResource("RectangleShape2D_m5gss")
 
+[node name="FilterIcon" type="Sprite2D" parent="."]
+
 [connection signal="inventory_found" from="ConveyorDetectors" to="." method="_on_conveyor_detectors_inventory_found"]
 [connection signal="item_held" from="ConveyorInventory" to="." method="_on_conveyor_inventory_item_held"]
 [connection signal="directions_changed" from="DirectionController" to="." method="_on_direction_controller_directions_changed"]

@@ -131,3 +131,10 @@ func set_lists(new_whitelist: Array[String], new_blacklist: Array[String]) -> vo
 	whitelist = new_whitelist.duplicate()
 	blacklist = new_blacklist.duplicate()
 	refresh_item_overlays()
+
+func set_mode(new_mode: String) -> void:
+	current_mode = new_mode if new_mode == "blacklist" else "whitelist"
+	whitelist_button.button_pressed = current_mode == "whitelist"
+	blacklist_button.button_pressed = current_mode == "blacklist"
+	update_mode_display()
+	refresh_item_overlays()

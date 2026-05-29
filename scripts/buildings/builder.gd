@@ -62,7 +62,7 @@ func _physics_process(_delta):
 				if $"../UI".try_buy_building(current_data.build_price):
 					current_buildable.place(location)
 					audio_controller.play_bought()
-					EventBus.emit_task_completed(current_data.building_type)
+					EventBus.emit_building_placed(location, current_data.building_type, get_current_build_direction())
 					print(current_data.building_type)
 		if Input.is_action_pressed("right_click") or Input.is_action_just_pressed("destruction"):
 				finish_building()
@@ -73,3 +73,6 @@ func finish_building():
 
 func _on_ui_building_selected(building_data: BuildingData) -> void:
 	start_building(building_data)
+
+func get_current_build_direction() -> Enums.Direction:
+	return current_buildable.get_placement_direction()

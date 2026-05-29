@@ -1,0 +1,108 @@
+[gd_resource type="Resource" script_class="DialogueSequence" load_steps=23 format=3 uid="uid://cswvg3q5j3bxo"]
+
+[ext_resource type="Script" uid="uid://cx6xs4flvdf56" path="res://resources/dialogue/DialogueSequence.gd" id="1_sequence"]
+[ext_resource type="Script" uid="uid://e5nqgor0cffg" path="res://resources/dialogue/DialogueEntry.gd" id="2_entry"]
+
+[sub_resource type="Resource" id="DialogueEntry_intro_1"]
+script = ExtResource("2_entry")
+trigger = "intro"
+main_text = "Добро пожаловать в симулятор сахарного завода. Я проведу вас по основам игры."
+
+[sub_resource type="Resource" id="DialogueEntry_intro_2"]
+script = ExtResource("2_entry")
+trigger = "intro"
+main_text = "Вам предстоит освоить производство свекольного сахара."
+
+[sub_resource type="Resource" id="DialogueEntry_intro_3"]
+script = ExtResource("2_entry")
+trigger = "intro"
+main_text = "Для начала подойдите к выгрузочной площадке."
+
+[sub_resource type="Resource" id="DialogueEntry_build_menu"]
+script = ExtResource("2_entry")
+trigger = "build_menu"
+main_text = "Отсюда свекла поступает на завод. Чтобы транспортировать её дальше, понадобится конвейер. Откройте меню строительства кнопкой B."
+
+[sub_resource type="Resource" id="DialogueEntry_select_conveyor"]
+script = ExtResource("2_entry")
+trigger = "select_conveyor"
+main_text = "Отлично. Теперь найдите в списке конвейер, нажмите купить и кликните в указанное место на карте."
+
+[sub_resource type="Resource" id="DialogueEntry_rotate"]
+script = ExtResource("2_entry")
+trigger = "rotate"
+main_text = "Теперь можно поставить второй конвейер. Чтобы развернуть выбранную постройку, используйте кнопку R."
+
+[sub_resource type="Resource" id="DialogueEntry_conveyor"]
+script = ExtResource("2_entry")
+trigger = "conveyor"
+main_text = "Поставьте конвейер на подсвеченную клетку. Если нужно выйти из режима строительства, нажмите правую кнопку мыши."
+
+[sub_resource type="Resource" id="DialogueEntry_cleaner"]
+script = ExtResource("2_entry")
+trigger = "cleaner"
+main_text = "Следующий шаг — очистительная станция. Она принимает свеклу и превращает её в свекольную мякоть."
+
+[sub_resource type="Resource" id="DialogueEntry_chips"]
+script = ExtResource("2_entry")
+trigger = "chips"
+main_text = "Подведите свеклу к очистителю и дождитесь результата. Когда появится свекольная мякоть, цепочка продолжится."
+
+[sub_resource type="Resource" id="DialogueEntry_sell_item"]
+script = ExtResource("2_entry")
+trigger = "sell_item"
+main_text = "В стене справа сверху находится экспортер. Доведите до него предмет, чтобы продать его и получить деньги."
+
+[sub_resource type="Resource" id="DialogueEntry_delete_building"]
+script = ExtResource("2_entry")
+trigger = "delete_building"
+main_text = "Иногда линию нужно перестроить. Перейдите в режим сноса на Q и удалите любую постройку левой кнопкой мыши."
+
+[sub_resource type="Resource" id="DialogueEntry_diffuser"]
+script = ExtResource("2_entry")
+trigger = "diffuser"
+main_text = "Постройте диффузор. Он перерабатывает свекольную мякоть в сок."
+
+[sub_resource type="Resource" id="DialogueEntry_juice"]
+script = ExtResource("2_entry")
+trigger = "juice"
+main_text = "Направьте свекольную мякоть в диффузор и дождитесь свекольного сока."
+
+[sub_resource type="Resource" id="DialogueEntry_splitter"]
+script = ExtResource("2_entry")
+trigger = "splitter"
+main_text = "Теперь разделим производство на две линии. Снесите конвейер на указанной клетке и поставьте на его место разделитель."
+
+[sub_resource type="Resource" id="DialogueEntry_evaporator"]
+script = ExtResource("2_entry")
+trigger = "evaporator"
+main_text = "Постройте выпариватель. Он превращает свекольный сок в сахарный сироп."
+
+[sub_resource type="Resource" id="DialogueEntry_syrup"]
+script = ExtResource("2_entry")
+trigger = "syrup"
+main_text = "Подайте свекольный сок в выпариватель и дождитесь сахарного сиропа."
+
+[sub_resource type="Resource" id="DialogueEntry_crystallizer"]
+script = ExtResource("2_entry")
+trigger = "crystallizer"
+main_text = "Постройте кристаллизатор. В нём сироп превращается во влажный сахар."
+
+[sub_resource type="Resource" id="DialogueEntry_wet_sugar"]
+script = ExtResource("2_entry")
+trigger = "wet_sugar"
+main_text = "Направьте сахарный сироп в кристаллизатор и получите влажный сахар."
+
+[sub_resource type="Resource" id="DialogueEntry_packer"]
+script = ExtResource("2_entry")
+trigger = "packer"
+main_text = "Остался последний станок — упаковщик. Постройте его, чтобы подготовить сахар к продаже."
+
+[sub_resource type="Resource" id="DialogueEntry_packed_sugar"]
+script = ExtResource("2_entry")
+trigger = "packed_sugar"
+main_text = "Произведите упакованный сахар и отправьте его на продажу. Теперь у вас есть полная линия сахарного завода."
+
+[resource]
+script = ExtResource("1_sequence")
+entries = Array[Resource]([SubResource("DialogueEntry_intro_1"), SubResource("DialogueEntry_intro_2"), SubResource("DialogueEntry_intro_3"), SubResource("DialogueEntry_build_menu"), SubResource("DialogueEntry_select_conveyor"), SubResource("DialogueEntry_rotate"), SubResource("DialogueEntry_conveyor"), SubResource("DialogueEntry_cleaner"), SubResource("DialogueEntry_chips"), SubResource("DialogueEntry_sell_item"), SubResource("DialogueEntry_delete_building"), SubResource("DialogueEntry_diffuser"), SubResource("DialogueEntry_juice"), SubResource("DialogueEntry_splitter"), SubResource("DialogueEntry_evaporator"), SubResource("DialogueEntry_syrup"), SubResource("DialogueEntry_crystallizer"), SubResource("DialogueEntry_wet_sugar"), SubResource("DialogueEntry_packer"), SubResource("DialogueEntry_packed_sugar")])

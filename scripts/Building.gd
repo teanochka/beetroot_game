@@ -10,6 +10,9 @@ var from_direction: Enums.Direction = Enums.Direction.Left
 @onready var sprite = $Sprite2D
 @onready var timer = $Timer
 @onready var progress_bar: Node2D = $ProgressBar
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
+
 var is_processing: bool = false 
 var clickable: bool = true
 var success_chance: float = 1.0
@@ -93,6 +96,7 @@ func _on_conveyor_inventory_item_held():
 			animation_timer.start()
 			print("Animation started for ", building_data.building_type)
 		
+		audio_player.play()
 		progress_bar.show()
 		progress_bar.update_progress(0)
 		
@@ -124,6 +128,8 @@ func _on_timer_timeout():
 		# Возвращаемся к первому кадру
 		set_sprite_frame(0)
 		print("Animation stopped for ", building_data.building_type)
+	
+	audio_player.stop()
 	
 	var item = $ConveyorInventory.peek_item()
 	if item:

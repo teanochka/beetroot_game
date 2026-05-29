@@ -1,0 +1,11 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dt668nxxx42nq"]
+
+[ext_resource type="Texture2D" uid="uid://d00ws7wljnit4" path="res://themes/UIpack_vector.svg" id="1_cips5"]
+
+[resource]
+texture = ExtResource("1_cips5")
+texture_margin_left = 8.7051735
+texture_margin_top = 8.925092
+texture_margin_right = 8.269915
+texture_margin_bottom = 8.110611
+region_rect = Rect2(1.0240288, 310.0936, 99.99434, 99.9245)

@@ -10,11 +10,12 @@ script = ExtResource("1_5dt40")
 
 [node name="Error" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_cedxo")
-volume_db = -8.0
+volume_db = -40.475
 
 [node name="Placed" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_6fhfa")
+volume_db = -28.265
 
 [node name="Bought" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_vj1x0")
-volume_db = -8.0
+volume_db = -32.565

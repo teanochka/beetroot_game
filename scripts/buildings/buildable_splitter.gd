@@ -31,6 +31,9 @@ func place(location: Vector2):
 	get_tree().current_scene.add_child(splitter)
 	print("BuildableSplitter: создан сплиттер")
 
+func get_placement_direction() -> Enums.Direction:
+	return from_direction
+
 func determine_from_direction():
 	for direction in Enums.Direction.values():
 		if not to_directions.has(direction):

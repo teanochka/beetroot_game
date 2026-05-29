@@ -4,6 +4,7 @@ class_name GhostController
 @onready var ghost_building_scene = preload("res://scenes/ghost_building.tscn")
 
 var active_ghosts: Dictionary = {}
+var current_quest_type: String = ""
 
 var quest_ghosts: Dictionary = {
 	"conveyor": [
@@ -112,9 +113,11 @@ func _ready():
 	var building_data = preload("res://resources/buildings/cleaner.tres")
 	print(building_data)
 	EventBus.current_task_changed.connect(_on_current_task_changed)
+	EventBus.building_placed.connect(_on_building_placed)
 
 func spawn_ghosts_for_quest(quest_type: String) -> void:
 	clear_all_ghosts()
+	current_quest_type = quest_type
 	
 	if quest_ghosts.has(quest_type):
 		var ghost_configs = quest_ghosts[quest_type]
@@ -149,3 +152,25 @@ func clear_all_ghosts() -> void:
 
 func _on_current_task_changed(task_type: String):
 	spawn_ghosts_for_quest(task_type)
+
+func _on_building_placed(location: Vector2, building_type: String, direction: Enums.Direction) -> void:
+	if current_quest_type.is_empty() or active_ghosts.is_empty():
+		return
+	if not active_ghosts.has(location):
+		return
+
+	var ghost: GhostBuilding = active_ghosts[location]
+	if ghost.building_data.building_type != building_type:
+		return
+	if not placed_direction_matches_ghost(ghost, direction):
+		return
+
+	remove_ghost(location)
+	if active_ghosts.is_empty():
+		EventBus.emit_task_completed(current_quest_type)
+
+func placed_direction_matches_ghost(ghost: GhostBuilding, direction: Enums.Direction) -> bool:
+	var building_type = ghost.building_data.building_type
+	if building_type == "conveyor" or building_type == "splitter":
+		return ghost.direction == direction
+	return true

@@ -2,7 +2,7 @@ extends Node2D
 class_name GhostBuilding
 
 var ghost_color: Color = Color.YELLOW
-var alpha = 0.5
+var alpha = 0.7
 
 @export var building_data: BuildingData
 @export var direction: Enums.Direction

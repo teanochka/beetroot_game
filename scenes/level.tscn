@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://xlhfaujtotv5"]
+[gd_scene load_steps=21 format=4 uid="uid://xlhfaujtotv5"]
 
 [ext_resource type="Script" uid="uid://yo5h7bnavnfp" path="res://scripts/level.gd" id="1_ux5qa"]
 [ext_resource type="Texture2D" uid="uid://c3v6tbasvm5xy" path="res://assets/background.png" id="2_8c41q"]
@@ -14,9 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://6evlux51r022" path="res://scenes/ghost_controller.tscn" id="15_wc255"]
 [ext_resource type="PackedScene" uid="uid://dskhw70rvg7p4" path="res://scenes/deconstructor.tscn" id="16_arp2o"]
 [ext_resource type="PackedScene" uid="uid://eagcyjc724dh" path="res://scenes/conveyor_ui.tscn" id="16_ux5qa"]
-[ext_resource type="Script" uid="uid://bch86smdq4pbd" path="res://scenes/UIManager.gd" id="17_82cfe"]
+[ext_resource type="Script" uid="uid://bch86smdq4pbd" path="res://scripts/UIManager.gd" id="17_82cfe"]
 [ext_resource type="PackedScene" uid="uid://d1uovhafhbgd6" path="res://scenes/audio_controller.tscn" id="17_ux5qa"]
 [ext_resource type="PackedScene" uid="uid://ypense6xgocw" path="res://scenes/exporter.tscn" id="18_82cfe"]
+[ext_resource type="PackedScene" uid="uid://bs1vs0movs3us" path="res://scenes/dialogue.tscn" id="19_dialogue"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b121j"]
 texture = ExtResource("2_mx8sn")
@@ -69,7 +70,7 @@ tile_set = SubResource("TileSet_8c41q")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_wc255")
-volume_db = -5.0
+volume_db = -59.675
 autoplay = true
 parameters/looping = true
 
@@ -96,6 +97,8 @@ z_index = 20
 [node name="GhostController" parent="." instance=ExtResource("15_wc255")]
 
 [node name="ConveyorUI" parent="." instance=ExtResource("16_ux5qa")]
+
+[node name="Dialogue" parent="." instance=ExtResource("19_dialogue")]
 
 [node name="UIManager" type="Node" parent="."]
 script = ExtResource("17_82cfe")

@@ -29,6 +29,9 @@ func place(location: Vector2):
 	belt.global_position = location
 	get_tree().current_scene.add_child(belt)
 
+func get_placement_direction() -> Enums.Direction:
+	return to_direction
+
 func _on_from_direction_controller_direction_changed():
 	determine_from_direction()
 	$ConveyorSpriteController.set_sprite_frame(to_direction, from_direction)
